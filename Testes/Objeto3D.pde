@@ -15,8 +15,6 @@ public class Objeto3D{
     float VSx, VSy, VSz;//VALORES PARA A ESCALA
     
     int X_universo, Y_universo, Z_universo;
-    
-    ArrayList <Face> FaceList = new ArrayList();
 
     TransV2 transformacoes;
     

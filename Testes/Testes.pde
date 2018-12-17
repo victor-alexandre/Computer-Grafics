@@ -29,7 +29,20 @@ ArrayList <Objeto3D_Com_Faces> ObjectList_Com_Faces = new ArrayList();
 String nomeFigura;
 int qtdObjetos_na_figura;
 void setup(){
-    size(900,700);
+    //PRIMEIRA COISA QUE ESTOU FAZENDO É ADICIONAR O CHÃO DO BANG
+    int [][]Floor_Points = {{3*width/8, 0, 2*width/8}, {3*width/8, 0, -2*width/8},
+                            {-3*width/8, 0, 2*width/8}, {-3*width/8, 0, -2*width/8}};
+    int [][]Floor_Lines = {{0,2}, {2,3}, {3,1}, {1,0}};
+    int []Floor_Faces_Points = {0,2,3,1};
+    ArrayList <Face> Floor_Faces_Indexes = new ArrayList();
+    Floor_Faces_Indexes.add(new Face(Floor_Faces_Points, 0.48, 0.2, 0));
+    int Floor_X_universo = width;
+    int Floor_Y_universo = height;
+    ObjectList_Com_Faces.add(new Objeto3D_Com_Faces(Floor_Points, Floor_Lines, Floor_Faces_Indexes, Floor_X_universo, Floor_Y_universo, "Floor"));
+    
+    
+    
+    fullScreen();
     background(0); 
     Rx = 0;
     Ry = 0;
@@ -152,6 +165,11 @@ void setup(){
     //        println(ObjectList_Com_Faces.get(0).FaceList.get(i).F[j]);
     //    }
     //}
+                           //ordem dos pontos 1 2 3 4
+    //int [][]Floor_Points = {{width/2 + 2*width/8, 0, width/2 + 2*width/8}, {width/2 + 2*width/8, 0, width/2 - 2*width/8},
+    //                        {width/2 - 2*width/8, 0, width/2 + 2*width/8}, {width/2 - 2*width/8, 0, width/2 - 2*width/8}};
+    
+
 }
 
 void draw(){             
@@ -175,11 +193,12 @@ void draw(){
         
         if(Universe){
             fill(255);
-            text("Universo", 50,25);
+            text("Universo", 50,25);                                                          
+            
             if(isSelected < 0) isSelected = 0;
             if(!ObjectList_Com_Faces.isEmpty()){
                 for(int i = 0; i < ObjectList_Com_Faces.size(); i++){
-                    ObjectList_Com_Faces.get(i).objectUpdate(-Tx, -Ty, -Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);
+                    ObjectList_Com_Faces.get(i).objectUpdate(-3*Tx, -3*Ty, -3*Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);
                     ObjectList_Com_Faces.get(i).transformacoes.updateUniverse(URx, URy, URz);
                 }
             }
