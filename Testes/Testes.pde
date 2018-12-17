@@ -35,10 +35,10 @@ void setup(){
     int [][]Floor_Lines = {{0,2}, {2,3}, {3,1}, {1,0}};
     int []Floor_Faces_Points = {0,2,3,1};
     ArrayList <Face> Floor_Faces_Indexes = new ArrayList();
-    Floor_Faces_Indexes.add(new Face(Floor_Faces_Points, 124/255.0, 59/255.0, 65/255.0));
+    Floor_Faces_Indexes.add(new Face(Floor_Faces_Points, 124/255*1.0, 59/255*1.0, 69*1.0/255*1.0));
     int Floor_X_universo = width;
     int Floor_Y_universo = height;
-    //ObjectList_Com_Faces.add(new Objeto3D_Com_Faces(Floor_Points, Floor_Lines, Floor_Faces_Indexes, Floor_X_universo, Floor_Y_universo, "Floor"));
+    ObjectList_Com_Faces.add(new Objeto3D_Com_Faces(Floor_Points, Floor_Lines, Floor_Faces_Indexes, Floor_X_universo, Floor_Y_universo, "Floor"));
     
     
     
@@ -67,9 +67,8 @@ void setup(){
     
     imgMENU = loadImage ("menu.png");
     projection_font = createFont("Meera", 12,true);
-   // ObjectList.add(new Objeto3D(cubo, arestaCubo,500,500,500));    
    
-    //LEIO OS OBJETOS DO ARQUIVO figure.dat E CONSTRUO OS OBJETOS COM OS DADOS DO ARQUIVO
+    //LEIO OS OBJETOS DO ARQUIVO teste1.txt E CONSTRUO OS OBJETOS COM OS DADOS DO ARQUIVO
     String[] lines = loadStrings("teste1.txt");
     int NumeroDePontos = lines.length;
     int Figure_X_universo = width, Figure_Y_universo = height;
@@ -95,7 +94,6 @@ void setup(){
         pontos[i+1][1] = yf;
         pontos[i+1][2] = zf;  
         
-        int li = i, lf = i+1;
         linhas[i][0]=i;
         linhas[i][1]= i+1;      
     }
@@ -126,15 +124,8 @@ void draw(){
         
         if(Universe){
             fill(255);
-            text("Universo", 50,25);                                                          
-            if(!ObjectList.isEmpty()){
-                for(int i = 0; i < ObjectList.size(); i++){
-                    ObjectList.get(i).objectUpdate(-3*Tx, -3*Ty, -3*Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);
-                    ObjectList.get(i).transformacoes.updateUniverse(URx, URy, URz);
-                    ObjectList.get(i).desenhaObjeto3D(true);                              
-                }
-            }
-               
+            text("Universo", 50,25);   
+            
 
             if(isSelected < 0) isSelected = 0;
             if(!ObjectList_Com_Faces.isEmpty()){
@@ -143,24 +134,36 @@ void draw(){
                     ObjectList_Com_Faces.get(i).transformacoes.updateUniverse(URx, URy, URz);
                 }
             }
+            
+            if(!ObjectList.isEmpty()){
+                for(int i = 0; i < ObjectList.size(); i++){
+                    ObjectList.get(i).transformacoes.updateUniverse(URx, URy, URz);
+                    ObjectList.get(i).objectUpdate(-3*Tx, -3*Ty, -3*Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);                                                
+                }
+            }
             reset();
+            
             for(int i = 0; i < ObjectList_Com_Faces.size(); i++){
                 if(i == isSelected)ObjectList_Com_Faces.get(i).desenhaObjeto3Dcolorido(false);
                 else ObjectList_Com_Faces.get(i).desenhaObjeto3Dcolorido(false);
             }
+            
+            //Aqui eu desenho as arvores por ultimo
+            for(int i = 0; i < ObjectList.size(); i++)ObjectList.get(i).desenhaObjeto3D(false);  
+            
+
+            
         }
         else{ 
-            
-           if(!ObjectList.isEmpty()){
+                       
+            if(isSelected < 0) isSelected = 0;
+            if(!ObjectList_Com_Faces.isEmpty())ObjectList_Com_Faces.get(isSelected).objectUpdate(Tx, Ty, Tz, Rx, Ry, Rz, Sx, Sy, Sz, projecao);
+            if(!ObjectList.isEmpty()){
                 for(int i = 0; i < ObjectList.size(); i++){
                     ObjectList.get(i).objectUpdate(Tx, Ty, Tz, Rx, Ry, Rz, Sx, Sy, Sz, projecao);
-                    //ObjectList.get(i).transformacoes.updateUniverse(URx, URy, URz);
                     ObjectList.get(i).desenhaObjeto3D(true);                              
                 }
             }
-            
-            if(isSelected < 0) isSelected = 0;
-            if(!ObjectList_Com_Faces.isEmpty())ObjectList_Com_Faces.get(isSelected).objectUpdate(Tx, Ty, Tz, Rx, Ry, Rz, Sx, Sy, Sz, projecao);
             reset();
             for(int i = 0; i < ObjectList_Com_Faces.size(); i++){ //<>//
                 if(i == isSelected)ObjectList_Com_Faces.get(i).desenhaObjeto3Dcolorido(true);
