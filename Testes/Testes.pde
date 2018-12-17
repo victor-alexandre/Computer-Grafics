@@ -35,10 +35,10 @@ void setup(){
     int [][]Floor_Lines = {{0,2}, {2,3}, {3,1}, {1,0}};
     int []Floor_Faces_Points = {0,2,3,1};
     ArrayList <Face> Floor_Faces_Indexes = new ArrayList();
-    Floor_Faces_Indexes.add(new Face(Floor_Faces_Points, 0.48, 0.2, 0));
+    Floor_Faces_Indexes.add(new Face(Floor_Faces_Points, 124/255.0, 59/255.0, 65/255.0));
     int Floor_X_universo = width;
     int Floor_Y_universo = height;
-    ObjectList_Com_Faces.add(new Objeto3D_Com_Faces(Floor_Points, Floor_Lines, Floor_Faces_Indexes, Floor_X_universo, Floor_Y_universo, "Floor"));
+    //ObjectList_Com_Faces.add(new Objeto3D_Com_Faces(Floor_Points, Floor_Lines, Floor_Faces_Indexes, Floor_X_universo, Floor_Y_universo, "Floor"));
     
     
     
@@ -70,105 +70,36 @@ void setup(){
    // ObjectList.add(new Objeto3D(cubo, arestaCubo,500,500,500));    
    
     //LEIO OS OBJETOS DO ARQUIVO figure.dat E CONSTRUO OS OBJETOS COM OS DADOS DO ARQUIVO
-    String[] lines = loadStrings("figure.dat");
-    int Figure_X_universo, Figure_Y_universo;
- 
-    nomeFigura = lines[0];
-
-    qtdObjetos_na_figura = Integer.parseInt(lines[2]);
-    println("\nQquantidade de Objetos na figura "+ qtdObjetos_na_figura);
+    String[] lines = loadStrings("teste1.txt");
+    int Figure_X_universo = width, Figure_Y_universo = height;
+    int [][]pontos = new int[168][3];
+    int [][]linhas = new int [168][2];
     
-    isSelected = qtdObjetos_na_figura-1;
-    
-    String []parts = lines[1].split(" ");
-    Figure_X_universo = abs(Integer.parseInt(parts[0]))+abs(Integer.parseInt(parts[1]));
-    Figure_Y_universo = abs(Integer.parseInt(parts[2]))+abs(Integer.parseInt(parts[3]));
-    println("\nTAMANHO UNIVERSO X: "+ Figure_X_universo + " Y:" + Figure_Y_universo);
-
-    parts = lines[4].split(" ");
-    int contadorLinha = 4;//vou pocisionar esse contador na linha que tras os dados das qtd de pontos linhas e faces
-    int qtdpontos = Integer.parseInt(parts[0]);
-    int qtdlinhas = Integer.parseInt(parts[1]);
-    int qtdfaces  = Integer.parseInt(parts[2]);
-
-
-
-    for(int i = 0; i < qtdObjetos_na_figura; i++){
-        println("qtdpontos "+qtdpontos+"\nqtdlinhas "+qtdlinhas+ "\nqtdfaces "+ qtdfaces);
-        int [][]Figure_Pontos = new int[qtdpontos][3];
-        int [][]Figure_Lines = new int[qtdlinhas][2];      
-        ArrayList <Face> Figure_Faces = new ArrayList();
-        String nomeObjeto = lines[contadorLinha -1];
-        println("\n"+nomeObjeto);
+    for(int i = 0; i < 168; i+=2){
+        String []parts = lines[i].split(" ");
+        int xi = round(Float.parseFloat(parts[0]));
+        int yi = round(Float.parseFloat(parts[1]));
+        int zi = round(Float.parseFloat(parts[2]));
         
-            
-        for(int k = 0, j = contadorLinha+1; j <= contadorLinha+qtdpontos; j++, k++){
-            parts = lines[j].split(" ");
-            Figure_Pontos[k][0] = Integer.parseInt(parts[0]);
-            Figure_Pontos[k][1] = Integer.parseInt(parts[1]);
-            Figure_Pontos[k][2] = Integer.parseInt(parts[2]);
-            println("\nlinhas dos pontos "+Figure_Pontos[k][0]+ " " + Figure_Pontos[k][1] +" " + Figure_Pontos[k][2]);
-        }
+        parts = lines[i+1].split(" ");
+        int xf = round(Float.parseFloat(parts[0]));
+        int yf = round(Float.parseFloat(parts[1]));
+        int zf = round(Float.parseFloat(parts[2]));
         
-        for(int k = 0, j = contadorLinha+qtdpontos+1; j <= contadorLinha+qtdpontos+qtdlinhas; j++, k++){
-            parts = lines[j].split(" ");
-            Figure_Lines[k][0] = Integer.parseInt(parts[0])-1;
-            Figure_Lines[k][1] = Integer.parseInt(parts[1])-1;
-            println("\nlinhas das linhas "+Figure_Lines[k][0]+" " + Figure_Lines[k][1]);
-        }       
+        pontos[i][0] = xi;
+        pontos[i][1] = yi;
+        pontos[i][2] = zi;
+       
+        pontos[i+1][0] = xf;
+        pontos[i+1][1] = yf;
+        pontos[i+1][2] = zf;  
         
-        for(int k = 0, j = contadorLinha+qtdpontos+qtdlinhas+1; j <= contadorLinha+qtdpontos+qtdlinhas+qtdfaces; j++, k++){             
-            parts = lines[j].split(" ");
-            println("linhas das faces ");
-            int NumeroDePontosDaFace = Integer.parseInt(parts[0]);
-            int []Figure_Face_Points = new int[NumeroDePontosDaFace];
-            float R,G,B;
-            for(int m = 1; m <= NumeroDePontosDaFace; m++){
-                //É m-1 PQ A POSIÇÃO 0 CONTEM O NUMERO QUE DEFINE O "NumeroDePontosDaFace" 
-                Figure_Face_Points[m-1] = Integer.parseInt(parts[m])-1;//e há esse -1 no final pq os indices do arquivo começam em 1 e não em 0            
-                println(Figure_Face_Points[m-1]+" ");
-            }
-
-            R = Float.parseFloat(parts[NumeroDePontosDaFace+1]); 
-            G = Float.parseFloat(parts[NumeroDePontosDaFace+2]);
-            B = Float.parseFloat(parts[NumeroDePontosDaFace+3]);
-            println(R + " " + G + " " + B);
-            Figure_Faces.add(new Face(Figure_Face_Points, R,G,B));
-        } 
-        ObjectList_Com_Faces.add(new Objeto3D_Com_Faces(Figure_Pontos, Figure_Lines, Figure_Faces, Figure_X_universo, Figure_Y_universo, nomeObjeto));        
-        
-        parts = lines[contadorLinha+qtdpontos+qtdlinhas+qtdfaces+1].split(" ");        
-        int VRx = Integer.parseInt(parts[0]); int VRy = Integer.parseInt(parts[1]); int VRz = Integer.parseInt(parts[2]);//VALORES PARA A ROTAÇÃO 
-        println("\nlinhas das rotações "+ " " + VRx + " "+ VRy +" " + VRz);
- 
-        parts = lines[contadorLinha+qtdpontos+qtdlinhas+qtdfaces+2].split(" ");    
-        int VSx = Integer.parseInt(parts[0]); int VSy = Integer.parseInt(parts[1]); int VSz = Integer.parseInt(parts[2]);//VALORES PARA A ESCALA      
-        println("\nlinhas das escalas "+ " " + VSx + " "+ VSy +" " + VSz); 
-        
-        parts = lines[contadorLinha+qtdpontos+qtdlinhas+qtdfaces+3].split(" ");         
-        int VTx = Integer.parseInt(parts[0]); int VTy = Integer.parseInt(parts[1]); int VTz = Integer.parseInt(parts[2]);//VALORES PARA A TRANSLAÇÃO       
-        println("\nlinhas das translações "+ " " + VSx + " "+ VSy +" " + VSz); 
-        
-        ObjectList_Com_Faces.get(ObjectList_Com_Faces.size()-1).objectUpdate(VTx, VTy, VTz, VRx, VRy, VRz, VSx, VSy, VSz,0);
-        
-        if(qtdpontos+qtdlinhas+qtdfaces+4+contadorLinha < lines.length){
-            contadorLinha = qtdpontos+qtdlinhas+qtdfaces+5+contadorLinha;
-            println("\nContadorLinha "+contadorLinha+"   qtdPontos "+qtdpontos+"   qtdlinhas "+qtdlinhas+"   qtdFaces "+qtdpontos + "   +5\n");
-            parts = lines[contadorLinha].split(" ");
-            qtdpontos = Integer.parseInt(parts[0]);
-            qtdlinhas = Integer.parseInt(parts[1]);
-            qtdfaces  = Integer.parseInt(parts[2]);                   
-        }
+        int li = i, lf = i+1;
+        linhas[i][0]=i;
+        linhas[i][1]= i+1;      
     }
-    //for(int i = 0; i < ObjectList_Com_Faces.get(0).FaceList.size(); i++){
-    //    for(int j = 0; j < ObjectList_Com_Faces.get(0).FaceList.get(i).F.length; j++){
-    //        println(ObjectList_Com_Faces.get(0).FaceList.get(i).F[j]);
-    //    }
-    //}
-                           //ordem dos pontos 1 2 3 4
-    //int [][]Floor_Points = {{width/2 + 2*width/8, 0, width/2 + 2*width/8}, {width/2 + 2*width/8, 0, width/2 - 2*width/8},
-    //                        {width/2 - 2*width/8, 0, width/2 + 2*width/8}, {width/2 - 2*width/8, 0, width/2 - 2*width/8}};
-    
+    ObjectList.add(new Objeto3D(pontos, linhas, Figure_X_universo, Figure_Y_universo, Figure_X_universo));
+
 
 }
 
@@ -190,11 +121,21 @@ void draw(){
 
         fill(255);
         text(projection_name, 3.9*width/6, 25);
+
+         if(!ObjectList.isEmpty()){
+            for(int i = 0; i < ObjectList.size(); i++){
+                ObjectList.get(i).objectUpdate(Tx, Ty, Tz, Rx, Ry, Rz, Sx, Sy, Sz, projecao);
+                ObjectList.get(i).desenhaObjeto3D(false);                              
+            }
+        }
+               
+        
         
         if(Universe){
             fill(255);
             text("Universo", 50,25);                                                          
             
+
             if(isSelected < 0) isSelected = 0;
             if(!ObjectList_Com_Faces.isEmpty()){
                 for(int i = 0; i < ObjectList_Com_Faces.size(); i++){
