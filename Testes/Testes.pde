@@ -29,7 +29,7 @@ ArrayList <Objeto3D_Com_Faces> ObjectList_Com_Faces = new ArrayList();
 String nomeFigura;
 int qtdObjetos_na_figura;
 void setup(){
-    //PRIMEIRA COISA QUE ESTOU FAZENDO É ADICIONAR O CHÃO DO BANG
+    //PRIMEIRA COISA QUE ESTOU FAZENDO É ADICIONAR O CHÃO DA FLORESTA
     int [][]Floor_Points = {{3*width/8, 0, 2*width/8}, {3*width/8, 0, -2*width/8},
                             {-3*width/8, 0, 2*width/8}, {-3*width/8, 0, -2*width/8}};
     int [][]Floor_Lines = {{0,2}, {2,3}, {3,1}, {1,0}};
@@ -68,37 +68,47 @@ void setup(){
     imgMENU = loadImage ("menu.png");
     projection_font = createFont("Meera", 12,true);
    
-    //LEIO OS OBJETOS DO ARQUIVO teste1.txt E CONSTRUO OS OBJETOS COM OS DADOS DO ARQUIVO
-    String[] lines = loadStrings("teste1.txt");
-    int NumeroDePontos = lines.length;
-    int Figure_X_universo = width, Figure_Y_universo = height;
-    int [][]pontos = new int[NumeroDePontos][3];
-    int [][]linhas = new int [NumeroDePontos][2];
-    
-    for(int i = 0; i < NumeroDePontos; i+=2){
-        String []parts = lines[i].split(" ");
-        int xi = round(Float.parseFloat(parts[0]));
-        int yi = round(Float.parseFloat(parts[1]));
-        int zi = round(Float.parseFloat(parts[2]));
+    //LEIO todos os modelos da pasta.
+    for(int k = 1; k < 100; k++){
+        String pad = "";
+        if(k<10) pad = "00";
+        if(k>=10) pad = "0";
+        String[] lines = loadStrings("tree"+pad+k+".txt");
+        int NumeroDePontos = lines.length;
+        int Figure_X_universo = width, Figure_Y_universo = height;
+        int [][]pontos = new int[NumeroDePontos][3];
+        int [][]linhas = new int [NumeroDePontos][2];
         
-        parts = lines[i+1].split(" ");
-        int xf = round(Float.parseFloat(parts[0]));
-        int yf = round(Float.parseFloat(parts[1]));
-        int zf = round(Float.parseFloat(parts[2]));
-        
-        pontos[i][0] = xi;
-        pontos[i][1] = yi;
-        pontos[i][2] = zi;
-       
-        pontos[i+1][0] = xf;
-        pontos[i+1][1] = yf;
-        pontos[i+1][2] = zf;  
-        
-        linhas[i][0]=i;
-        linhas[i][1]= i+1;      
-    }
-    ObjectList.add(new Objeto3D(pontos, linhas, Figure_X_universo, Figure_Y_universo, Figure_X_universo));
 
+        int translacaoX = (int)random(-3*width/8, 3*width/8);
+        int translacaoZ = (int)random(-2*width/8, 2*width/8);
+        println("random x: " + translacaoX + "     random z: " + translacaoZ);
+        for(int i = 0; i < NumeroDePontos; i+=2){
+            String []parts = lines[i].split(" ");
+            int xi = round(Float.parseFloat(parts[0]));
+            int yi = round(Float.parseFloat(parts[1]));
+            int zi = round(Float.parseFloat(parts[2]));
+            
+            parts = lines[i+1].split(" ");
+            int xf = round(Float.parseFloat(parts[0]));
+            int yf = round(Float.parseFloat(parts[1]));
+            int zf = round(Float.parseFloat(parts[2]));
+            
+            pontos[i][0] = xi + translacaoX;
+            pontos[i][1] = yi;
+            pontos[i][2] = zi + translacaoZ;
+           
+            pontos[i+1][0] = xf + translacaoX;
+            pontos[i+1][1] = yf;
+            pontos[i+1][2] = zf + translacaoZ;  
+            
+            linhas[i][0]=i;
+            linhas[i][1]= i+1;     
+            
+            
+        }
+        ObjectList.add(new Objeto3D(pontos, linhas, Figure_X_universo, Figure_Y_universo, Figure_X_universo));
+    }
 
 }
 
@@ -131,13 +141,13 @@ void draw(){
             if(!ObjectList_Com_Faces.isEmpty()){
                 for(int i = 0; i < ObjectList_Com_Faces.size(); i++){
                     ObjectList_Com_Faces.get(i).objectUpdate(-3*Tx, -3*Ty, -3*Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);
-                    ObjectList_Com_Faces.get(i).transformacoes.updateUniverse(URx, URy, URz);
+                    ObjectList_Com_Faces.get(i).transformacoes.updateUniverse(Rx, Ry, Rz);
                 }
             }
             
             if(!ObjectList.isEmpty()){
                 for(int i = 0; i < ObjectList.size(); i++){
-                    ObjectList.get(i).transformacoes.updateUniverse(URx, URy, URz);
+                    ObjectList.get(i).transformacoes.updateUniverse(Rx, Ry, Rz);
                     ObjectList.get(i).objectUpdate(-3*Tx, -3*Ty, -3*Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);                                                
                 }
             }
@@ -149,37 +159,39 @@ void draw(){
             }
             
             //Aqui eu desenho as arvores por ultimo
-            for(int i = 0; i < ObjectList.size(); i++)ObjectList.get(i).desenhaObjeto3D(true);  
+            for(int i = 0; i < 10; i+=2){
+                ObjectList.get(i).desenhaObjeto3D(true); 
+            } 
             
 
             
         }
-        else{ 
+        //else{ 
                        
-            if(isSelected < 0) isSelected = 0;
-            if(!ObjectList_Com_Faces.isEmpty())ObjectList_Com_Faces.get(isSelected).objectUpdate(Tx, Ty, Tz, Rx, Ry, Rz, Sx, Sy, Sz, projecao);
-            if(!ObjectList.isEmpty()){
-                for(int i = 0; i < ObjectList.size(); i++){
-                    ObjectList.get(i).objectUpdate(Tx, Ty, Tz, Rx, Ry, Rz, Sx, Sy, Sz, projecao);
-                    ObjectList.get(i).desenhaObjeto3D(true);                              
-                }
-            }
-            reset();
-            for(int i = 0; i < ObjectList_Com_Faces.size(); i++){ //<>//
-                if(i == isSelected)ObjectList_Com_Faces.get(i).desenhaObjeto3Dcolorido(true);
-                else ObjectList_Com_Faces.get(i).desenhaObjeto3Dcolorido(false);
-                //ObjectList_Com_Faces.get(i).transformacoes.ResetUniverse();//essa linha é para mim resetar o universo sempre que for trocado a escolha da rotação do objeto ou universo
-            } //<>//
-        }
+        //    if(isSelected < 0) isSelected = 0;
+        //    if(!ObjectList_Com_Faces.isEmpty())ObjectList_Com_Faces.get(isSelected).objectUpdate(Tx, Ty, Tz, Rx, Ry, Rz, Sx, Sy, Sz, projecao);
+        //    if(!ObjectList.isEmpty()){
+        //        for(int i = 0; i < ObjectList.size(); i++){
+        //            ObjectList.get(i).objectUpdate(Tx, Ty, Tz, Rx, Ry, Rz, Sx, Sy, Sz, projecao);
+        //            ObjectList.get(i).desenhaObjeto3D(true);                              
+        //        }
+        //    }
+        //    reset();
+        //    for(int i = 0; i < ObjectList_Com_Faces.size(); i++){ //<>//
+        //        if(i == isSelected)ObjectList_Com_Faces.get(i).desenhaObjeto3Dcolorido(true);
+        //        else ObjectList_Com_Faces.get(i).desenhaObjeto3Dcolorido(false);
+        //        //ObjectList_Com_Faces.get(i).transformacoes.ResetUniverse();//essa linha é para mim resetar o universo sempre que for trocado a escolha da rotação do objeto ou universo
+        //    } //<>//
+        //}
     } //<>//
 }
 
 //implementação para fazer funcionar a entrada de mais de uma tecla no caso o shift+tab
-void keyReleased(){
-    if(key == CODED){
-        if(keyCode == SHIFT)shiftPressed = false;
-    }
-} //<>//
+//void keyReleased(){
+//    if(key == CODED){
+//        if(keyCode == SHIFT)shiftPressed = false;
+//    }
+//} //<>//
 void keyPressed(){
     
     if(key == 'F' || key == 'f')FuncaoDoProcessing = !FuncaoDoProcessing;
@@ -199,7 +211,7 @@ void keyPressed(){
         if (keyCode == KeyEvent.VK_F1)menu = !menu;   
 
        //PERMITE QUE EU USE A FUNÇÃO DA TECLA SHIT + TAB   
-       if(keyCode == SHIFT)shiftPressed = true;       
+       //if(keyCode == SHIFT)shiftPressed = true;       
    }
 
      
@@ -246,32 +258,26 @@ void keyPressed(){
     if(key == '7')Rz = -0.1; 
     if(key == '8')Rz = 0.1;  
     
-    //KEYS PARA ROTACIONAR O UNIVERSO
-    if(key == 't' || key == 'T')URy = 0.1; 
-    if(key == 'g' || key == 'G')URy = -0.1; 
-    if(key == 'b' || key == 'B')URx = 0.1; 
-    if(key == 'y' || key == 'Y')URx = -0.1; 
-    if(key == 'h' || key == 'H')URz = -0.1; 
-    if(key == 'n' || key == 'N')URz = 0.1;  
+    ////KEYS PARA ROTACIONAR O UNIVERSO
+    //if(key == 't' || key == 'T')URy = 0.1; 
+    //if(key == 'g' || key == 'G')URy = -0.1; 
+    //if(key == 'b' || key == 'B')URx = 0.1; 
+    //if(key == 'y' || key == 'Y')URx = -0.1; 
+    //if(key == 'h' || key == 'H')URz = -0.1; 
+    //if(key == 'n' || key == 'N')URz = 0.1;  
     
     //Key para controlar qual projeção será aplicada
     if(key == 'p' || key == 'P')projecao++;
 
-    // CRIA CÓPIA DO OBJETO ATUAL
-   if(key == 'c' || key == 'C' && !ObjectList_Com_Faces.isEmpty()){
-       reset();
-       int wasSelected = isSelected;
-       ObjectList_Com_Faces.add(new Objeto3D_Com_Faces(ObjectList_Com_Faces.get(isSelected).P, ObjectList_Com_Faces.get(isSelected).L, ObjectList_Com_Faces.get(isSelected).FaceList, ObjectList_Com_Faces.get(isSelected).X_universo,ObjectList_Com_Faces.get(isSelected).Y_universo,ObjectList_Com_Faces.get(isSelected).nomeObjeto));    
-       isSelected = ObjectList_Com_Faces.size()-1;
-       ObjectList_Com_Faces.get(isSelected).objectSet(ObjectList_Com_Faces.get(wasSelected).VTx, ObjectList_Com_Faces.get(wasSelected).VTy, ObjectList_Com_Faces.get(wasSelected).VTz, ObjectList_Com_Faces.get(wasSelected).VRx, ObjectList_Com_Faces.get(wasSelected).VRy, ObjectList_Com_Faces.get(wasSelected).VRz, ObjectList_Com_Faces.get(wasSelected).VSx, ObjectList_Com_Faces.get(wasSelected).VSy, ObjectList_Com_Faces.get(wasSelected).VSz);      
-   }        
-    
-   // // CRIA NOVA INSTANCIA DE UM CUBO//ATUALIZAR PARA ADICINAR UM NOVO OBJETO DO TIPO OBJETO3D_COM_FACES
-   //if(key == '+'){
+   // // CRIA CÓPIA DO OBJETO ATUAL
+   //if(key == 'c' || key == 'C' && !ObjectList_Com_Faces.isEmpty()){
    //    reset();
-   //    ObjectList_Com_Faces.add(new Objeto3D_Com_Faces(cubo, arestaCubo,500,500,500));    
-   //    isSelected = ObjectList.size()-1;
-   //}
+   //    int wasSelected = isSelected;
+   //    ObjectList_Com_Faces.add(new Objeto3D_Com_Faces(ObjectList_Com_Faces.get(isSelected).P, ObjectList_Com_Faces.get(isSelected).L, ObjectList_Com_Faces.get(isSelected).FaceList, ObjectList_Com_Faces.get(isSelected).X_universo,ObjectList_Com_Faces.get(isSelected).Y_universo,ObjectList_Com_Faces.get(isSelected).nomeObjeto));    
+   //    isSelected = ObjectList_Com_Faces.size()-1;
+   //    ObjectList_Com_Faces.get(isSelected).objectSet(ObjectList_Com_Faces.get(wasSelected).VTx, ObjectList_Com_Faces.get(wasSelected).VTy, ObjectList_Com_Faces.get(wasSelected).VTz, ObjectList_Com_Faces.get(wasSelected).VRx, ObjectList_Com_Faces.get(wasSelected).VRy, ObjectList_Com_Faces.get(wasSelected).VRz, ObjectList_Com_Faces.get(wasSelected).VSx, ObjectList_Com_Faces.get(wasSelected).VSy, ObjectList_Com_Faces.get(wasSelected).VSz);      
+   //}        
+    
    
    // DESTROI INSTANCIA DO OBJETO
    if(key == '-'  && ObjectList_Com_Faces.size() > 0){
@@ -285,9 +291,9 @@ void keyPressed(){
 
 //FUNÇÃO PRA RESETAR OS PARAMETROS DE TRANSLAÇÃO, ROTACÃO E ESCALA
 void reset(){    
-        URx = 0;
-        URy = 0;
-        URz = 0;   
+    URx = 0;
+    URy = 0;
+    URz = 0;   
     
     
     Rx = 0;
