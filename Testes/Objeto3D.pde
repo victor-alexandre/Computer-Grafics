@@ -48,7 +48,9 @@ public class Objeto3D{
                 int xf = Pontos[L[rows][1]][0];
                 int yf = Pontos[L[rows][1]][1];
                 
-                LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(0,255,0));  
+                //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(0,255,0));
+                stroke(0,255,0);
+                line(xi, yi, xf, yf);
             }
         }
         else{
@@ -58,7 +60,9 @@ public class Objeto3D{
                 int xf = Pontos[L[rows][1]][0];
                 int yf = Pontos[L[rows][1]][1];
                 
-                LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(255,0,0));  
+                //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(255,0,0)); 
+                stroke(255,0,0);
+                line(xi, yi, xf, yf);
             }
         }
     } 

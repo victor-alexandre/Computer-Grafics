@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.*;
 import java.awt.event.KeyEvent;
 
-boolean Universe = false;
+boolean Universe = true;
 PImage imgMENU;
 boolean menu = true;
 boolean shiftPressed = false;
@@ -122,20 +122,19 @@ void draw(){
 
         fill(255);
         text(projection_name, 3.9*width/6, 25);
-
-         if(!ObjectList.isEmpty()){
-            for(int i = 0; i < ObjectList.size(); i++){
-                ObjectList.get(i).objectUpdate(Tx, Ty, Tz, Rx, Ry, Rz, Sx, Sy, Sz, projecao);
-                ObjectList.get(i).desenhaObjeto3D(false);                              
-            }
-        }
-               
         
         
         if(Universe){
             fill(255);
             text("Universo", 50,25);                                                          
-            
+            if(!ObjectList.isEmpty()){
+                for(int i = 0; i < ObjectList.size(); i++){
+                    ObjectList.get(i).objectUpdate(-3*Tx, -3*Ty, -3*Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);
+                    ObjectList.get(i).transformacoes.updateUniverse(URx, URy, URz);
+                    ObjectList.get(i).desenhaObjeto3D(true);                              
+                }
+            }
+               
 
             if(isSelected < 0) isSelected = 0;
             if(!ObjectList_Com_Faces.isEmpty()){
