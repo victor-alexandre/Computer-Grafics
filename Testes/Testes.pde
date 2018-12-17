@@ -149,7 +149,16 @@ void draw(){
                 else ObjectList_Com_Faces.get(i).desenhaObjeto3Dcolorido(false);
             }
         }
-        else{                   
+        else{ 
+            
+           if(!ObjectList.isEmpty()){
+                for(int i = 0; i < ObjectList.size(); i++){
+                    ObjectList.get(i).objectUpdate(Tx, Ty, Tz, Rx, Ry, Rz, Sx, Sy, Sz, projecao);
+                    //ObjectList.get(i).transformacoes.updateUniverse(URx, URy, URz);
+                    ObjectList.get(i).desenhaObjeto3D(true);                              
+                }
+            }
+            
             if(isSelected < 0) isSelected = 0;
             if(!ObjectList_Com_Faces.isEmpty())ObjectList_Com_Faces.get(isSelected).objectUpdate(Tx, Ty, Tz, Rx, Ry, Rz, Sx, Sy, Sz, projecao);
             reset();
