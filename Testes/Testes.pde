@@ -69,7 +69,7 @@ void setup(){
     projection_font = createFont("Meera", 12,true);
    
     //LEIO todos os modelos da pasta.
-    for(int k = 1; k < 100; k++){
+    for(int k = 0; k < 100; k++){
         String pad = "";
         if(k<10) pad = "00";
         if(k>=10) pad = "0";
@@ -159,7 +159,7 @@ void draw(){
             }
             
             //Aqui eu desenho as arvores por ultimo
-            for(int i = 0; i < 10; i+=2){
+            for(int i = 0; i < 100; i++){
                 ObjectList.get(i).desenhaObjeto3D(true); 
             } 
             
