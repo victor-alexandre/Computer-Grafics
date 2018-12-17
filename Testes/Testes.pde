@@ -71,11 +71,12 @@ void setup(){
    
     //LEIO OS OBJETOS DO ARQUIVO figure.dat E CONSTRUO OS OBJETOS COM OS DADOS DO ARQUIVO
     String[] lines = loadStrings("teste1.txt");
+    int NumeroDePontos = lines.length;
     int Figure_X_universo = width, Figure_Y_universo = height;
-    int [][]pontos = new int[168][3];
-    int [][]linhas = new int [168][2];
+    int [][]pontos = new int[NumeroDePontos][3];
+    int [][]linhas = new int [NumeroDePontos][2];
     
-    for(int i = 0; i < 168; i+=2){
+    for(int i = 0; i < NumeroDePontos; i+=2){
         String []parts = lines[i].split(" ");
         int xi = round(Float.parseFloat(parts[0]));
         int yi = round(Float.parseFloat(parts[1]));
