@@ -90,48 +90,51 @@ public class Objeto3D_Com_Faces{
     void desenhaObjeto3Dcolorido(boolean isSelected){
         int [][] Pontos = transformacoes.aplicarTransformacao(this.P);
         ArrayList <Face> FacesVisiveis = new ArrayList();
- 
-        //faço o calculo da normal de todas as faces do objeto e adiciono apenas as faces visiveis no arraylist de facesvisiveis
-        for(int i = 0; i < FaceList.size(); i++){
-            int P1x = Pontos[FaceList.get(i).F[2]][0];
-            int P2x = Pontos[FaceList.get(i).F[1]][0];
-            int P3x = Pontos[FaceList.get(i).F[0]][0];
+        
+         //Gambiarra para fazer o chão ser sempre visivel
+        if(FaceList.size() == 1)FacesVisiveis.add( new Face(FaceList.get(0).F, FaceList.get(0).R, FaceList.get(0).G, FaceList.get(0).B));
+        else{
+            //faço o calculo da normal de todas as faces do objeto e adiciono apenas as faces visiveis no arraylist de facesvisiveis
+            for(int i = 0; i < FaceList.size(); i++){
+                int P1x = Pontos[FaceList.get(i).F[2]][0];
+                int P2x = Pontos[FaceList.get(i).F[1]][0];
+                int P3x = Pontos[FaceList.get(i).F[0]][0];
+                
+                int P1y = Pontos[FaceList.get(i).F[2]][1];
+                int P2y = Pontos[FaceList.get(i).F[1]][1];
+                int P3y = Pontos[FaceList.get(i).F[0]][1];
+             
+                int P1z = Pontos[FaceList.get(i).F[2]][2];
+                int P2z = Pontos[FaceList.get(i).F[1]][2];
+                int P3z = Pontos[FaceList.get(i).F[0]][2];
+                
+                int nx = (P3y-P2y)*(P1z-P2z) - (P1y-P2y)*(P3z-P2z);
+                int ny = (P3z-P2z)*(P1x-P2x) - (P1z-P2z)*(P3x-P2x);
+                int nz = (P3x-P2x)*(P1y-P2y) - (P1x-P2x)*(P3y-P2y);
+                
+                //Pontos do observador
+                int Px = 10;
+                int Py = -height;
+                int Pz = -3*width;
+                
+                //se o produto interno for maior do que 0 eu adiciono a face nas faces visiveis
+                int produtointerno = nx*(Px-P2x)+ ny*(Py-P2y) + nz*(Pz-P2z);
+               // println("\nPRODUTO INTERNO É: "+ produtointerno + "\n");
+                if( produtointerno >= 0)
+                FacesVisiveis.add( new Face(FaceList.get(i).F, FaceList.get(i).R, FaceList.get(i).G, FaceList.get(i).B));
+            }        
             
-            int P1y = Pontos[FaceList.get(i).F[2]][1];
-            int P2y = Pontos[FaceList.get(i).F[1]][1];
-            int P3y = Pontos[FaceList.get(i).F[0]][1];
-         
-            int P1z = Pontos[FaceList.get(i).F[2]][2];
-            int P2z = Pontos[FaceList.get(i).F[1]][2];
-            int P3z = Pontos[FaceList.get(i).F[0]][2];
             
-            int nx = (P3y-P2y)*(P1z-P2z) - (P1y-P2y)*(P3z-P2z);
-            int ny = (P3z-P2z)*(P1x-P2x) - (P1z-P2z)*(P3x-P2x);
-            int nz = (P3x-P2x)*(P1y-P2y) - (P1x-P2x)*(P3y-P2y);
+            //calcula zMédio apenas das faces visiveis
+            for(int i = 0; i < FacesVisiveis.size(); i++){
+                FacesVisiveis.get(i).calculaZmedio(Pontos);
+            }
+            //ordeno as faces de forma que as com menor zmédio aparecerão nas primeiras posições do arraylist
+            Collections.sort(FacesVisiveis, new ZmedioDescendingComparator());     
             
-            //Pontos do observador
-            int Px = 10;
-            int Py = -height;
-            int Pz = -3*width;
+          //  println("numero de faces visiveis: " + FacesVisiveis.size());
             
-            //se o produto interno for maior do que 0 eu adiciono a face nas faces visiveis
-            int produtointerno = nx*(Px-P2x)+ ny*(Py-P2y) + nz*(Pz-P2z);
-           // println("\nPRODUTO INTERNO É: "+ produtointerno + "\n");
-            if( produtointerno >= 0)
-            FacesVisiveis.add( new Face(FaceList.get(i).F, FaceList.get(i).R, FaceList.get(i).G, FaceList.get(i).B));
-        }        
-        
-        
-        //calcula zMédio apenas das faces visiveis
-        for(int i = 0; i < FacesVisiveis.size(); i++){
-            FacesVisiveis.get(i).calculaZmedio(Pontos);
-        }
-        //ordeno as faces de forma que as com menor zmédio aparecerão nas primeiras posições do arraylist
-        Collections.sort(FacesVisiveis, new ZmedioDescendingComparator());     
-        
-      //  println("numero de faces visiveis: " + FacesVisiveis.size());
-        
-        
+        } 
         
         if(isSelected){
             for(int i = 0; i < FacesVisiveis.size(); i++){
