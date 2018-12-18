@@ -138,7 +138,7 @@ void setup(){
             int zf = round(Float.parseFloat(parts[2]));
             
             pontos[i][0] = xi + translacaoX;
-            pontos[i][1] = yi;
+            pontos[i][1] = yi ;
             pontos[i][2] = zi + translacaoZ;
            
             pontos[i+1][0] = xf + translacaoX;
