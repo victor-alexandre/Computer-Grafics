@@ -3,6 +3,7 @@ import java.util.*;
 import java.awt.event.KeyEvent;
 
 
+
 boolean Universe = true;
 PImage imgMENU;
 boolean menu = true;
@@ -19,7 +20,7 @@ int Tx, Ty, Tz;//INCREMENTOS PARA A TRANSLAÇÃO
 float Rx , Ry , Rz;//INCREMENTOS PARA A ROTAÇÃO
 float Sx, Sy, Sz;//INCREMENTOS PARA A ESCALA
 
-float URx , URy , URz;//INCREMENTOS PARA A ROTAÇÃO DO UNIVERSO
+//float URx , URy , URz;//INCREMENTOS PARA A ROTAÇÃO DO UNIVERSO
 
 int[][] cubo = { {50, -50, -50}, {50, -50, 50}, {-50, -50, 50}, {-50, -50, -50}, {-50, 50, 50}, {-50, 50, -50}, {50, 50, -50}, {50, 50, 50} };
 int[][] arestaCubo = { {0, 1}, {1, 2}, {2, 3}, {3, 0}, {7, 4}, {4, 5}, {5, 6}, {6, 7}, {7, 1}, {4, 2}, {5, 3}, {6, 0} };
@@ -56,11 +57,7 @@ void setup(){
     Sx = 0;
     Sy = 0;
     Sz = 0;
-    
-    URx = 0;
-    URy = 0;
-    URz = 0;
-    
+
     
     iObject = 0;
     isSelected = 0;
@@ -68,13 +65,15 @@ void setup(){
     
     imgMENU = loadImage ("menu.png");
     projection_font = createFont("Meera", 12,true);
+    int NumeroDeArquivos = new File("/home/accelerator/Documents/4 semestre/computaçãografica/grass/").list().length;
    
     //LEIO todos os modelos da pasta.
-    for(int k = 0; k < 100; k++){
+    for(int k = 0; k < NumeroDeArquivos; k++){
         String pad = "";
         if(k<10) pad = "00";
         if(k>=10) pad = "0";
-        String[] lines = loadStrings("tree"+pad+k+".txt");
+        if(k>=100) pad = "";
+        String[] lines = loadStrings("/home/accelerator/Documents/4 semestre/computaçãografica/grass/"+ "grass"+pad+k+".txt");
         int NumeroDePontos = lines.length;
         int Figure_X_universo = width, Figure_Y_universo = height;
         int [][]pontos = new int[NumeroDePontos][3];
@@ -114,7 +113,7 @@ void setup(){
 void draw(){             
     if(menu){
         background(255);
-        image(imgMENU,100,0);      
+        image(imgMENU,width/4,0);      
     } //<>//
     
     else{
@@ -140,7 +139,7 @@ void draw(){
             if(isSelected < 0) isSelected = 0;
             if(!ObjectList_Com_Faces.isEmpty()){
                 for(int i = 0; i < ObjectList_Com_Faces.size(); i++){
-                    ObjectList_Com_Faces.get(i).objectUpdate(-3*Tx, -3*Ty, -3*Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);
+                    ObjectList_Com_Faces.get(i).objectUpdate(-6*Tx, -6*Ty, -6*Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);
                     ObjectList_Com_Faces.get(i).transformacoes.updateUniverse(Rx, Ry, Rz);
                 }
             }
@@ -148,7 +147,7 @@ void draw(){
             if(!ObjectList.isEmpty()){
                 for(int i = 0; i < ObjectList.size(); i++){
                     ObjectList.get(i).transformacoes.updateUniverse(Rx, Ry, Rz);
-                    ObjectList.get(i).objectUpdate(-3*Tx, -3*Ty, -3*Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);                                                
+                    ObjectList.get(i).objectUpdate(-6*Tx, -6*Ty, -6*Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);                                                
                 }
             }
             reset();
@@ -159,7 +158,7 @@ void draw(){
             }
             
             //Aqui eu desenho as arvores por ultimo
-            for(int i = 0; i < 100; i++){
+            for(int i = 0; i < 1000; i++){
                 ObjectList.get(i).desenhaObjeto3D(true); 
             } 
             
@@ -193,7 +192,7 @@ void draw(){
 //    }
 //} //<>//
 void keyPressed(){
-    
+    if(key == 'R' || key == 'r')ResetAll();
     if(key == 'F' || key == 'f')FuncaoDoProcessing = !FuncaoDoProcessing;
     if(key == 'U' || key == 'u'){
         Universe = !Universe; 
@@ -216,20 +215,20 @@ void keyPressed(){
 
      
    
-   if(key == TAB){
-       // SELECIONA PROXIMO OBJETO DO ARRAYLIST
-       if(shiftPressed){
-           reset();
-           if(isSelected == 0) isSelected = ObjectList_Com_Faces.size();
-           isSelected--;
-       }
-       //SELECIONA OBJETO ANTERIOR DO ARRAYLIST
-       else{   
-           reset();         
-           isSelected++;
-           if(isSelected > ObjectList_Com_Faces.size()-1)isSelected %= ObjectList_Com_Faces.size();
-       }
-   }
+   //if(key == TAB){
+   //    // SELECIONA PROXIMO OBJETO DO ARRAYLIST
+   //    if(shiftPressed){
+   //        reset();
+   //        if(isSelected == 0) isSelected = ObjectList_Com_Faces.size();
+   //        isSelected--;
+   //    }
+   //    //SELECIONA OBJETO ANTERIOR DO ARRAYLIST
+   //    else{   
+   //        reset();         
+   //        isSelected++;
+   //        if(isSelected > ObjectList_Com_Faces.size()-1)isSelected %= ObjectList_Com_Faces.size();
+   //    }
+   //}
     
     //KEYS PARA REESCALAR OS EIXOS INDIVIDUALMENTE
     if(key == 'w' || key == 'W')Sy = 0.2; 
@@ -290,12 +289,7 @@ void keyPressed(){
 }
 
 //FUNÇÃO PRA RESETAR OS PARAMETROS DE TRANSLAÇÃO, ROTACÃO E ESCALA
-void reset(){    
-    URx = 0;
-    URy = 0;
-    URz = 0;   
-    
-    
+void reset(){        
     Rx = 0;
     Ry = 0;
     Rz = 0;
@@ -307,4 +301,14 @@ void reset(){
     Sx = 0;
     Sy = 0;
     Sz = 0;
+}
+
+void ResetAll(){
+    if(!ObjectList.isEmpty()){
+        for(int i = 0; i < ObjectList.size(); i++)ObjectList.get(i).objectSet(0,0,0,0,0,0,1,1,1);
+    }
+   if(!ObjectList_Com_Faces.isEmpty()){
+        for(int i = 0; i < ObjectList_Com_Faces.size(); i++)ObjectList_Com_Faces.get(i).objectSet(0,0,0,0,0,0,1,1,1);
+    }
+    reset();
 }

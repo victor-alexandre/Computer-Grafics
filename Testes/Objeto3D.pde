@@ -55,7 +55,7 @@ public class Objeto3D{
                 
                 //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(0,255,0));
 
-                stroke(R,B,G);
+                stroke(0,255,0);
                 line(xi, yi, xf, yf);
             }
         }
