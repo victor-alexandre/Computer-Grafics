@@ -37,7 +37,7 @@ void setup(){
     int [][]Floor_Lines = {{0,2}, {2,3}, {3,1}, {1,0}};
     int []Floor_Faces_Points = {0,2,3,1};
     ArrayList <Face> Floor_Faces_Indexes = new ArrayList();
-    Floor_Faces_Indexes.add(new Face(Floor_Faces_Points, 124, 59, 69));
+    Floor_Faces_Indexes.add(new Face(Floor_Faces_Points, 102, 51, 0));
     int Floor_X_universo = width;
     int Floor_Y_universo = height;
     ObjectList_Com_Faces.add(new Objeto3D_Com_Faces(Floor_Points, Floor_Lines, Floor_Faces_Indexes, Floor_X_universo, Floor_Y_universo, "Floor"));
@@ -266,7 +266,7 @@ void keyPressed(){
     //if(key == 'n' || key == 'N')URz = 0.1;  
     
     //Key para controlar qual projeção será aplicada
-    if(key == 'p' || key == 'P')projecao++;
+    if(key == 'p' || key == 'P'){projecao++; if(projecao % 5 == 3)  Tz += 220; if(projecao % 5 == 0)  Tz -= 220;}
 
    // // CRIA CÓPIA DO OBJETO ATUAL
    //if(key == 'c' || key == 'C' && !ObjectList_Com_Faces.isEmpty()){

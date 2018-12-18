@@ -6,9 +6,9 @@ public class Objeto3D{
     
     int projecao; 
     
-    int R = (int)random(255);
-    int G = (int)random(255);
-    int B = (int)random(255);
+    int R = (int)random(0,150);
+    int G = (int)random(80,255);
+    int B = (int)random(0,100);
     
     //int xcentro = 0;
     //int ycentro = 0;
@@ -55,7 +55,7 @@ public class Objeto3D{
                 
                 //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(0,255,0));
 
-                stroke(0,255,0);
+                stroke(R,G,B);
                 line(xi, yi, xf, yf);
             }
         }
