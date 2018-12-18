@@ -133,15 +133,15 @@ public class TransV2 {
             else if(projecao == 3){
             //aplico projeçao Ponto de fuga em Z + reflexão no eixo y por causa das coordenadas do processing + translado a origem para o centro da tela
             //estou considerando o ponto de fuga de z como sendo -100
-            resultado[i][0] = round(x/(1-(z/-100))) + round(width/2);            
-            resultado[i][1] = -1*round(y/(1-(z/-100))) + round(height/2);     
+            resultado[i][0] = round(x/(1-(z/-4000))) + round(width/2);            
+            resultado[i][1] = -1*round(y/(1-(z/-4000))) + round(height/2);     
             }  
             
             else if(projecao == 4){
             //aplico projeçao Ponto de fuga em X e Z  + reflexão no eixo y por causa das coordenadas do processing + translado a origem para o centro da tela
             //estou considerando o ponto de fuga de z como sendo -100 e o de x 180
-            resultado[i][0] = round(x/(1-(x/180)-(z/-100))) + round(width/2);            
-            resultado[i][1] = -1*round(y/(1-(x/180)-(z/-100))) + round(height/2);     
+            resultado[i][0] = round(x/(1-(x/2000)-(z/-4000))) + round(width/2);            
+            resultado[i][1] = -1*round(y/(1-(x/2000)-(z/-4000))) + round(height/2);     
             }
             
             //era pra mim converter 3D para 2D, (ou seja elimina eixo z  essa é a projeção ortográfica), mas estou guardando esse Z para calcular o zmedio 

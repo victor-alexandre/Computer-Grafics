@@ -6,6 +6,10 @@ public class Objeto3D{
     
     int projecao; 
     
+    int R = (int)random(255);
+    int G = (int)random(255);
+    int B = (int)random(255);
+    
     //int xcentro = 0;
     //int ycentro = 0;
     //int zcentro = 0;
@@ -42,6 +46,7 @@ public class Objeto3D{
     void desenhaObjeto3D(boolean isSelected){         
         int [][] Pontos = transformacoes.aplicarTransformacao(this.P);
         if(isSelected){
+            
             for(int rows = 0; rows < L.length; rows++){
                 int xi = Pontos[L[rows][0]][0];
                 int yi = Pontos[L[rows][0]][1]; 
@@ -49,7 +54,8 @@ public class Objeto3D{
                 int yf = Pontos[L[rows][1]][1];
                 
                 //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(0,255,0));
-                stroke(0,255,0);
+
+                stroke(R,B,G);
                 line(xi, yi, xf, yf);
             }
         }

@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.*;
 import java.awt.event.KeyEvent;
 
+
 boolean Universe = true;
 PImage imgMENU;
 boolean menu = true;
@@ -40,7 +41,7 @@ void setup(){
     int Floor_Y_universo = height;
     ObjectList_Com_Faces.add(new Objeto3D_Com_Faces(Floor_Points, Floor_Lines, Floor_Faces_Indexes, Floor_X_universo, Floor_Y_universo, "Floor"));
     
-    
+
     
     fullScreen();
     background(0); 
@@ -82,7 +83,7 @@ void setup(){
 
         int translacaoX = (int)random(-3*width/8, 3*width/8);
         int translacaoZ = (int)random(-2*width/8, 2*width/8);
-        println("random x: " + translacaoX + "     random z: " + translacaoZ);
+       // println("random x: " + translacaoX + "     random z: " + translacaoZ);
         for(int i = 0; i < NumeroDePontos; i+=2){
             String []parts = lines[i].split(" ");
             int xi = round(Float.parseFloat(parts[0]));
@@ -103,9 +104,7 @@ void setup(){
             pontos[i+1][2] = zf + translacaoZ;  
             
             linhas[i][0]=i;
-            linhas[i][1]= i+1;     
-            
-            
+            linhas[i][1]= i+1;                 
         }
         ObjectList.add(new Objeto3D(pontos, linhas, Figure_X_universo, Figure_Y_universo, Figure_X_universo));
     }
@@ -119,6 +118,8 @@ void draw(){
     } //<>//
     
     else{
+        
+
         background(0);
         textFont(projection_font,25);
         String projection_name = "Projeção: ";
@@ -135,7 +136,6 @@ void draw(){
         if(Universe){
             fill(255);
             text("Universo", 50,25);   
-            
 
             if(isSelected < 0) isSelected = 0;
             if(!ObjectList_Com_Faces.isEmpty()){

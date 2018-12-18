@@ -6,9 +6,9 @@ public class Face{
     
     Face(int []F, float R, float G, float B){
         this.F = F;
-        this.R = round(R*255);
-        this.G = round(G*255);
-        this.B = round(B*255);       
+        this.R = (int)R;
+        this.G = (int)G;
+        this.B = (int)B;       
     }  
     
     
