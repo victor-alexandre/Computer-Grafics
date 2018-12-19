@@ -114,7 +114,7 @@ void setup(){
     //        String []parts = lines[i].split(" ");
     //        int xi = round(Float.parseFloat(parts[0]));
     //        int yi = round(Float.parseFloat(parts[1]));
-    //        int zi = round(Float.parseFloat(parts[2])*20);
+    //        int zi = round(Float.parseFloat(parts[2]));
     //        int nivel = round(Float.parseFloat(parts[3]));
     //        int stroke_weight = round(Float.parseFloat(parts[4]));   
             
@@ -123,7 +123,7 @@ void setup(){
     //        parts = lines[i+1].split(" ");
     //        int xf = round(Float.parseFloat(parts[0]));
     //        int yf = round(Float.parseFloat(parts[1]));
-    //        int zf = round(Float.parseFloat(parts[2])*20);
+    //        int zf = round(Float.parseFloat(parts[2]));
             
     //        if(maxAltura < yi)maxAltura = yi;
     //        if(maxAltura < yf)maxAltura = yf;
