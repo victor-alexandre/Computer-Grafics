@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.*;
 import java.awt.event.KeyEvent;
 
-
+String PATH = "/home/accelerator/Documents/4 semestre/computaçãografica/trees/models";
 
 boolean Universe = true;
 PImage imgMENU;
@@ -33,7 +33,7 @@ String nomeFigura;
 int qtdObjetos_na_figura;
 
 
-int NumeroDeArquivos = new File("/home/accelerator/Documents/4 semestre/computaçãografica/trees/models").list().length;
+int NumeroDeArquivos = new File(PATH).list().length;
 
 
 void setup(){
@@ -158,7 +158,7 @@ void setup(){
         if(k<10) pad = "00";
         if(k>=10) pad = "0";
         if(k>=100) pad = "";
-        String[] lines = loadStrings("/home/accelerator/Documents/4 semestre/computaçãografica/trees/models/"+ "tree"+pad+k+".txt");
+        String[] lines = loadStrings(PATH+ "/"+"tree"+pad+k+".txt");
         int NumeroDePontos = lines.length;
         int Figure_X_universo = width, Figure_Y_universo = height;
         int [][]pontos = new int[NumeroDePontos][3];
