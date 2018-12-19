@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 boolean Universe = true;
 PImage imgMENU;
+PImage imgBackground;
 boolean menu = true;
 boolean shiftPressed = false;
 boolean FuncaoDoProcessing = true;
@@ -63,9 +64,10 @@ void setup(){
     isSelected = 0;
     projecao = 0;
     
+    imgBackground = loadImage("ceu.jpeg");
     imgMENU = loadImage ("menu.png");
     projection_font = createFont("Meera", 12,true);
-    int NumeroDeArquivos = new File("/home/accelerator/Documents/4 semestre/Computaçao Grafica/lsystem_trees/trees/models/grass/").list().length;
+    int NumeroDeArquivos = new File("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/grass").list().length;
    
     //LEIO todos os modelos da pasta.
     for(int k = 0; k < NumeroDeArquivos; k++){
@@ -73,7 +75,7 @@ void setup(){
         if(k<10) pad = "00";
         if(k>=10) pad = "0";
         if(k>=100) pad = "";
-        String[] lines = loadStrings("/home/accelerator/Documents/4 semestre/Computaçao Grafica/lsystem_trees/trees/models/grass/"+ "grass"+pad+k+".txt");
+        String[] lines = loadStrings("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/grass/"+ "grass"+pad+k+".txt");
         int NumeroDePontos = lines.length;
         int Figure_X_universo = width, Figure_Y_universo = height;
         int [][]pontos = new int[NumeroDePontos][3];
@@ -107,50 +109,6 @@ void setup(){
         }
         ObjectList.add(new Objeto3D(pontos, linhas, Figure_X_universo, Figure_Y_universo, Figure_X_universo));
     }
-    
-    int NumeroDeArquivos1 = new File("/home/accelerator/Documents/4 semestre/Computaçao Grafica/lsystem_trees/trees/models/meta/").list().length;
-   
-    //LEIO todos os modelos da pasta.
-    for(int k = 0; k < NumeroDeArquivos; k++){
-        String pad = "";
-        if(k<10) pad = "00";
-        if(k>=10) pad = "0";
-        if(k>=100) pad = "";
-        String[] lines = loadStrings("/home/accelerator/Documents/4 semestre/Computaçao Grafica/lsystem_trees/trees/models/meta/"+ "meta"+pad+k+".txt");
-        int NumeroDePontos = lines.length;
-        int Figure_X_universo = width, Figure_Y_universo = height;
-        int [][]pontos = new int[NumeroDePontos][3];
-        int [][]linhas = new int [NumeroDePontos][2];
-        
-
-        int translacaoX = (int)random(-3*width/8, 3*width/8);
-        int translacaoZ = (int)random(-2*width/8, 2*width/8);
-       // println("random x: " + translacaoX + "     random z: " + translacaoZ);
-        for(int i = 0; i < NumeroDePontos-1; i+=2){
-            String []parts = lines[i].split(" ");
-            int xi = round(Float.parseFloat(parts[0]));
-            int yi = round(Float.parseFloat(parts[1]));
-            int zi = round(Float.parseFloat(parts[2]));
-            
-            parts = lines[i+1].split(" ");
-            int xf = round(Float.parseFloat(parts[0]));
-            int yf = round(Float.parseFloat(parts[1]));
-            int zf = round(Float.parseFloat(parts[2]));
-            
-            pontos[i][0] = xi + translacaoX;
-            pontos[i][1] = yi ;
-            pontos[i][2] = zi + translacaoZ;
-           
-            pontos[i+1][0] = xf + translacaoX;
-            pontos[i+1][1] = yf;
-            pontos[i+1][2] = zf + translacaoZ;  
-            
-            linhas[i][0]=i;
-            linhas[i][1]= i+1;                 
-        }
-        ObjectList.add(new Objeto3D(pontos, linhas, Figure_X_universo, Figure_Y_universo, Figure_X_universo));
-    }
-
 }
 
 void draw(){             
@@ -163,6 +121,7 @@ void draw(){
         
 
         background(0);
+        image(imgBackground,0,0);
         textFont(projection_font,25);
         String projection_name = "Projeção: ";
         if(projecao % 5 == 0)projection_name = projection_name + "Cavaleira";
