@@ -76,7 +76,7 @@ public class Objeto3D{
                 float espessura;
                 
                 if(this.info[L[rows][0]][0] == 0){
-                    if(rows % 10 <= 8)stroke(folhaR,folhaG,folhaB);            
+                    if(rows % 10 <= 7)stroke(folhaR,folhaG,folhaB);            
                     else stroke(255,255,0);//flor                   
                     espessura = 5;
                     strokeWeight(espessura); 
@@ -90,8 +90,8 @@ public class Objeto3D{
                     //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(0,255,0));
                     strokeWeight(espessura);
 
-                    //else if(this.info[L[rows][0]][0] <= 5)stroke(galhoR,galhoG,galhoB);
-                    stroke(troncoR,troncoG,troncoB);
+                    if(this.info[L[rows][0]][0] <= 7)stroke(galhoR,galhoG,galhoB);
+                    else stroke(troncoR,troncoG,troncoB);
                     line(xi, yi, xf, yf);
                 }
             }
