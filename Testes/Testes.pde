@@ -40,6 +40,7 @@ void setup(){
     //PRIMEIRA COISA QUE ESTOU FAZENDO É ADICIONAR O CHÃO DA FLORESTA
     int [][]Floor_Points = {{3*width/8, 0, 2*width/8}, {3*width/8, 0, -2*width/8},
                             {-3*width/8, 0, 2*width/8}, {-3*width/8, 0, -2*width/8}};
+
     int [][]Floor_Lines = {{0,2}, {2,3}, {3,1}, {1,0}};
     int []Floor_Faces_Points = {0,2,3,1};
     ArrayList <Face> Floor_Faces_Indexes = new ArrayList();
@@ -78,6 +79,10 @@ void setup(){
     IntList random_X;
     IntList random_Z;
     IntList random_Files;
+    //Z RANGE = 680
+    //X RANGE = 1020
+    
+    println("xmax: " + 3*width/8 + "   xmin : "  + -3*width/8 + "     zmax: " + 2*width/8 + "   zmin : "  + -2*width/8 ); 
 
     //int NumeroDeArquivos1 = new File("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/grass").list().length;
 
@@ -180,14 +185,14 @@ void setup(){
             String []parts = lines[i].split(" ");
             int xi = round(Float.parseFloat(parts[0]));
             int yi = round(Float.parseFloat(parts[1]));
-            int zi = round(Float.parseFloat(parts[2])*20);
+            int zi = round(Float.parseFloat(parts[2]));
             int nivel = round(Float.parseFloat(parts[3]));
             int stroke_weight = round(Float.parseFloat(parts[4]));            
             
             parts = lines[i+1].split(" ");
             int xf = round(Float.parseFloat(parts[0]));
             int yf = round(Float.parseFloat(parts[1]));
-            int zf = round(Float.parseFloat(parts[2])*20);
+            int zf = round(Float.parseFloat(parts[2]));
 
             if(maxAltura < yi)maxAltura = yi;
             if(maxAltura < yf)maxAltura = yf;
