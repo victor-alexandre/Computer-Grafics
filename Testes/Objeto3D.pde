@@ -1,14 +1,25 @@
 public class Objeto3D{
     int [][]P;
     int [][]L;
+    int [][]info;
+    int maxProfundidade;
+    int maxAltura;
     
     String nomeObjeto;
     
     int projecao; 
     
-    int R = (int)random(0,150);
-    int G = (int)random(80,255);
-    int B = (int)random(0,100);
+    int troncoR = (int)random(51,153);
+    int troncoG = (int)random(76,25);
+    int troncoB = (int)random(0,0);
+    
+    int galhoR = (int)random(204,255);
+    int galhoG = (int)random(102,204);
+    int galhoB = (int)random(0,51);
+    
+    int folhaR = (int)random(0,102);
+    int folhaG = (int)random(153,255);
+    int folhaB = (int)random(0,100);
     
     //int xcentro = 0;
     //int ycentro = 0;
@@ -22,6 +33,7 @@ public class Objeto3D{
     int X_universo, Y_universo, Z_universo;
 
     TransV2 transformacoes;
+    
     
     Objeto3D(int [][]P, int [][]L, int X_universo, int Y_universo, int Z_universo){
         this.P = P;
@@ -44,6 +56,13 @@ public class Objeto3D{
         projecao = 0;
     }
     
+    void ObjectSetInfo(int [][]info, int maxProfundidade, int maxAltura){
+        this.info = info;
+        this.maxProfundidade = maxProfundidade;
+        this.maxAltura = maxAltura;
+        //println(this.maxAltura);
+    }
+    
     void desenhaObjeto3D(boolean isSelected){         
         int [][] Pontos = transformacoes.aplicarTransformacao(this.P);
         if(isSelected){
@@ -52,26 +71,43 @@ public class Objeto3D{
                 int xi = Pontos[L[rows][0]][0];
                 int yi = Pontos[L[rows][0]][1]; 
                 int xf = Pontos[L[rows][1]][0];
-                int yf = Pontos[L[rows][1]][1];
+                int yf = Pontos[L[rows][1]][1]; 
                 
-                //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(0,255,0));
-               // strokeWeight(Pontos[L[rows][0]][4]*1/10);
-                stroke(R,G,B);
-                line(xi, yi, xf, yf);
+                float espessura;
+                
+                if(this.info[L[rows][0]][0] == 0){
+                    if(rows % 10 <= 8)stroke(folhaR,folhaG,folhaB);            
+                    else stroke(255,255,0);//flor                   
+                    espessura = 5;
+                    strokeWeight(espessura); 
+                    line(xi, yi, xf, yf);
+                }
+               
+                else{                    
+                    espessura = map(this.info[L[rows][0]][1], 1, this.maxProfundidade, 1.5 + maxAltura/60, 1);
+                    //float espessura =  (float)(Math.pow(1,-this.info[L[rows][0]][1] ) * 10 );
+                    
+                    //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(0,255,0));
+                    strokeWeight(espessura);
+
+                    //else if(this.info[L[rows][0]][0] <= 5)stroke(galhoR,galhoG,galhoB);
+                    stroke(troncoR,troncoG,troncoB);
+                    line(xi, yi, xf, yf);
+                }
             }
         }
-        else{
-            for(int rows = 0; rows < L.length; rows++){
-                int xi = Pontos[L[rows][0]][0];
-                int yi = Pontos[L[rows][0]][1]; 
-                int xf = Pontos[L[rows][1]][0];
-                int yf = Pontos[L[rows][1]][1];
+        //else{
+        //    for(int rows = 0; rows < L.length; rows++){
+        //        int xi = Pontos[L[rows][0]][0];
+        //        int yi = Pontos[L[rows][0]][1]; 
+        //        int xf = Pontos[L[rows][1]][0];
+        //        int yf = Pontos[L[rows][1]][1];
                 
-                //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(255,0,0)); 
-                stroke(R,G,B);
-                line(xi, yi, xf, yf);
-            }
-        }
+        //        //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(255,0,0)); 
+        //        stroke(R,G,B);
+        //        line(xi, yi, xf, yf);
+        //    }
+        //}
     } 
     
     void objectUpdate(int Tx, int Ty, int Tz, float Rx, float Ry, float Rz, float Sx, float Sy, float Sz, int projecao){

@@ -31,6 +31,11 @@ ArrayList <Objeto3D_Com_Faces> ObjectList_Com_Faces = new ArrayList();
 
 String nomeFigura;
 int qtdObjetos_na_figura;
+
+
+int NumeroDeArquivos = new File("/home/accelerator/Documents/4 semestre/computaçãografica/trees/models").list().length;
+
+
 void setup(){
     //PRIMEIRA COISA QUE ESTOU FAZENDO É ADICIONAR O CHÃO DA FLORESTA
     int [][]Floor_Points = {{3*width/8, 0, 2*width/8}, {3*width/8, 0, -2*width/8},
@@ -38,7 +43,7 @@ void setup(){
     int [][]Floor_Lines = {{0,2}, {2,3}, {3,1}, {1,0}};
     int []Floor_Faces_Points = {0,2,3,1};
     ArrayList <Face> Floor_Faces_Indexes = new ArrayList();
-    Floor_Faces_Indexes.add(new Face(Floor_Faces_Points, 102, 51, 0));
+    Floor_Faces_Indexes.add(new Face(Floor_Faces_Points, 255, 204, 153));
     int Floor_X_universo = width;
     int Floor_Y_universo = height;
     ObjectList_Com_Faces.add(new Objeto3D_Com_Faces(Floor_Points, Floor_Lines, Floor_Faces_Indexes, Floor_X_universo, Floor_Y_universo, "Floor"));
@@ -67,68 +72,100 @@ void setup(){
     imgBackground = loadImage("ceu.jpeg");
     imgMENU = loadImage ("menu.png");
     projection_font = createFont("Meera", 12,true);
-    
-    int NumeroDeArquivos1 = new File("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/grass").list().length;
 
+      
+
+    IntList random_X;
+    IntList random_Z;
+    IntList random_Files;
+
+    //int NumeroDeArquivos1 = new File("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/grass").list().length;
+
+    ////LEIO todos os modelos da pasta.
+    //for(int k = 0; k < NumeroDeArquivos1; k++){
+
+        
+        
+    //    String pad = "";
+    //    if(k<10) pad = "00";
+    //    if(k>=10) pad = "0";
+    //    if(k>=100) pad = "";
+    //    String[] lines = loadStrings("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/grass/"+ "grass"+pad+k+".txt");
+    //    int NumeroDePontos = lines.length;
+    //    int Figure_X_universo = width, Figure_Y_universo = height;
+    //    int [][]pontos = new int[NumeroDePontos][3];
+    //    int [][]info = new int[NumeroDePontos][2];
+    //    int [][]linhas = new int [NumeroDePontos][2];
+    //    int maxProfundidade = 1;
+    //    int maxAltura = 0;
+        
+
+    //    int  translacaoX = (int)random(-3*width/8, 3*width/8);
+    //    int  translacaoZ = (int)random(-2*width/8, 2*width/8);
+
+           
+    //   // println("random x: " + translacaoX + "     random z: " + translacaoZ);
+    //    for(int i = 0; i < NumeroDePontos; i+=2){
+    //        String []parts = lines[i].split(" ");
+    //        int xi = round(Float.parseFloat(parts[0]));
+    //        int yi = round(Float.parseFloat(parts[1]));
+    //        int zi = round(Float.parseFloat(parts[2])*20);
+    //        int nivel = round(Float.parseFloat(parts[3]));
+    //        int stroke_weight = round(Float.parseFloat(parts[4]));   
+            
+
+            
+    //        parts = lines[i+1].split(" ");
+    //        int xf = round(Float.parseFloat(parts[0]));
+    //        int yf = round(Float.parseFloat(parts[1]));
+    //        int zf = round(Float.parseFloat(parts[2])*20);
+            
+    //        if(maxAltura < yi)maxAltura = yi;
+    //        if(maxAltura < yf)maxAltura = yf;
+            
+    //        int nivel1 = round(Float.parseFloat(parts[3]));
+    //        int stroke_weight1 = round(Float.parseFloat(parts[4]));    
+            
+    //        pontos[i][0] = xi + translacaoX;
+    //        pontos[i][1] = yi;
+    //        pontos[i][2] = zi + translacaoZ;
+    //        info[i][0] = nivel;
+    //        info[i][1] = stroke_weight;
+    //        if(maxProfundidade < stroke_weight) maxProfundidade = stroke_weight;
+            
+    //        pontos[i+1][0] = xf + translacaoX;
+    //        pontos[i+1][1] = yf;
+    //        pontos[i+1][2] = zf + translacaoZ;
+    //        info[i+1][0] = nivel1;
+    //        info[i+1][1] = stroke_weight1;
+    //        if(maxProfundidade < stroke_weight1) maxProfundidade = stroke_weight1;
+            
+    //        linhas[i][0]=i;
+    //        linhas[i][1]= i+1;                 
+    //    }
+    //    ObjectList.add(new Objeto3D(pontos, linhas, Figure_X_universo, Figure_Y_universo, Figure_X_universo));
+    //    ObjectList.get(ObjectList.size()-1).ObjectSetInfo(info, maxProfundidade, maxAltura);
+    //}
+    
+    
+    
+    
+    
+    int [][]random_points = new int[NumeroDeArquivos][2];    
     //LEIO todos os modelos da pasta.
-    for(int k = 0; k < NumeroDeArquivos1; k++){
+    for(int k = 0; k < NumeroDeArquivos; k++){      
         String pad = "";
         if(k<10) pad = "00";
         if(k>=10) pad = "0";
         if(k>=100) pad = "";
-        String[] lines = loadStrings("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/grass/"+ "grass"+pad+k+".txt");
+        String[] lines = loadStrings("/home/accelerator/Documents/4 semestre/computaçãografica/trees/models/"+ "tree"+pad+k+".txt");
         int NumeroDePontos = lines.length;
         int Figure_X_universo = width, Figure_Y_universo = height;
         int [][]pontos = new int[NumeroDePontos][3];
+        int [][]info = new int[NumeroDePontos][2];
         int [][]linhas = new int [NumeroDePontos][2];
-        
-        int  translacaoX = (int)random(-3*width/8, 3*width/8);
-        int  translacaoZ = (int)random(-2*width/8, 2*width/8);
-            
-       // println("random x: " + translacaoX + "     random z: " + translacaoZ);
-        for(int i = 0; i < NumeroDePontos; i+=2){
-            String []parts = lines[i].split(" ");
-            int xi = round(Float.parseFloat(parts[0]));
-            int yi = round(Float.parseFloat(parts[1]));
-            int zi = round(Float.parseFloat(parts[2]));
-
-            
-            parts = lines[i+1].split(" ");
-            int xf = round(Float.parseFloat(parts[0]));
-            int yf = round(Float.parseFloat(parts[1]));
-            int zf = round(Float.parseFloat(parts[2]));
-      
-            
-            pontos[i][0] = xi + translacaoX;
-            pontos[i][1] = yi;
-            pontos[i][2] = zi + translacaoZ;
-
-           
-            pontos[i+1][0] = xf + translacaoX;
-            pontos[i+1][1] = yf;
-            pontos[i+1][2] = zf + translacaoZ;  
-
-            
-            linhas[i][0]=i;
-            linhas[i][1]= i+1;                 
-        }
-        ObjectList.add(new Objeto3D(pontos, linhas, Figure_X_universo, Figure_Y_universo, Figure_X_universo));
-    }
-    
-    
-    int NumeroDeArquivos = new File("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/tree").list().length;
-    int [][]random_points = new int[NumeroDeArquivos][2];
-    //LEIO todos os modelos da pasta.
-    for(int k = 0; k < NumeroDeArquivos; k++){
-        String pad = "";
-        if(k<10) pad = "00";
-        if(k>=10) pad = "0";
-        if(k>=100) pad = "";
-        String[] lines = loadStrings("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/tree/"+ "tree"+pad+k+".txt");
-        int NumeroDePontos = lines.length;
-        int Figure_X_universo = width, Figure_Y_universo = height;
-        int [][]pontos = new int[NumeroDePontos][5];
-        int [][]linhas = new int [NumeroDePontos][2];
+        int maxProfundidade = 1;
+        int maxAltura = 0;
         
 
         int  translacaoX = (int)random(-3*width/8, 3*width/8);
@@ -143,16 +180,17 @@ void setup(){
             String []parts = lines[i].split(" ");
             int xi = round(Float.parseFloat(parts[0]));
             int yi = round(Float.parseFloat(parts[1]));
-            int zi = round(Float.parseFloat(parts[2])*1000);
+            int zi = round(Float.parseFloat(parts[2])*20);
             int nivel = round(Float.parseFloat(parts[3]));
             int stroke_weight = round(Float.parseFloat(parts[4]));            
             
             parts = lines[i+1].split(" ");
             int xf = round(Float.parseFloat(parts[0]));
             int yf = round(Float.parseFloat(parts[1]));
-            int zf = round(Float.parseFloat(parts[2])*1000);
-            //if(i == 50 || i == 60 || i == 70 || i == 80 || i == 10)
-            //println(zf);
+            int zf = round(Float.parseFloat(parts[2])*20);
+
+            if(maxAltura < yi)maxAltura = yi;
+            if(maxAltura < yf)maxAltura = yf;
             
             int nivel1 = round(Float.parseFloat(parts[3]));
             int stroke_weight1 = round(Float.parseFloat(parts[4]));    
@@ -160,19 +198,23 @@ void setup(){
             pontos[i][0] = xi + translacaoX;
             pontos[i][1] = yi;
             pontos[i][2] = zi + translacaoZ;
-            pontos[i][3] = nivel;
-            pontos[i][4] = stroke_weight;
+            info[i][0] = nivel;
+            info[i][1] = stroke_weight;
+            if(maxProfundidade < stroke_weight) maxProfundidade = stroke_weight;
             
             pontos[i+1][0] = xf + translacaoX;
             pontos[i+1][1] = yf;
             pontos[i+1][2] = zf + translacaoZ;
-            pontos[i+1][3] = nivel1;
-            pontos[i+1][4] = stroke_weight1;
+            info[i+1][0] = nivel1;
+            info[i+1][1] = stroke_weight1;
+            if(maxProfundidade < stroke_weight1) maxProfundidade = stroke_weight1;
             
             linhas[i][0]=i;
             linhas[i][1]= i+1;                 
         }
         ObjectList.add(new Objeto3D(pontos, linhas, Figure_X_universo, Figure_Y_universo, Figure_X_universo));
+        //println(maxAltura);
+        ObjectList.get(ObjectList.size()-1).ObjectSetInfo(info, maxProfundidade, maxAltura);
     }
 }
 
@@ -220,16 +262,15 @@ void draw(){
             reset();
             
             for(int i = 0; i < ObjectList_Com_Faces.size(); i++){
-                if(i == isSelected)ObjectList_Com_Faces.get(i).desenhaObjeto3Dcolorido(false);
-                else ObjectList_Com_Faces.get(i).desenhaObjeto3Dcolorido(false);
+                ObjectList_Com_Faces.get(i).desenhaObjeto3Dcolorido(false);
             }
             
             //Aqui eu desenho as arvores por ultimo
-            for(int i = 0; i < 60; i++){
-                ObjectList.get(i).desenhaObjeto3D(false); 
-            } 
+            //for(int i = 0; i < 20; i++){
+            //    ObjectList.get(i).desenhaObjeto3D(true); 
+            //} 
 
-              for(int i = 100; i < 160; i++){
+              for(int i = 0; i < NumeroDeArquivos; i++){
                 ObjectList.get(i).desenhaObjeto3D(true); 
             } 
           
@@ -264,10 +305,15 @@ void draw(){
 //} //<>//
 void keyPressed(){
     if(key == 'R' || key == 'r')ResetAll();
-    if(key == 'F' || key == 'f')FuncaoDoProcessing = !FuncaoDoProcessing;
-    if(key == 'U' || key == 'u'){
-        Universe = !Universe; 
-    }    
+    
+    //COMENTEI AS FUNÇÕES ABAIXO PARA ELAS NUNCA SEREM ALTERADAS E SEMPRE FICAREM ATIVAS
+    //if(key == 'F' || key == 'f')FuncaoDoProcessing = !FuncaoDoProcessing;
+    //if(key == 'U' || key == 'u'){
+    //    Universe = !Universe; 
+    //}    
+    
+    
+    
     //KEYS PARA TRANSLADAR //<>//
     if(key == '1')Tz=-5;
     if(key == '2')Tz=5;
@@ -390,5 +436,11 @@ boolean verifica_sorteio(int [][]random_points, int new_x, int new_z){
         if(random_points[i][0]== new_x && random_points[i][1] == new_z)return true;
     }
     return false;
+}
 
+boolean verifica_sorteio2(int []random_values, int new_value){
+    for(int i = 0; i < random_values.length; i++){
+        if(random_values[i]== new_value)return true;
+    }
+    return false;
 }
