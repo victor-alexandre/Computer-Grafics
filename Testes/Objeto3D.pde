@@ -67,7 +67,7 @@ public class Objeto3D{
         int [][] Pontos = transformacoes.aplicarTransformacao(this.P);
         if(isSelected){
             
-            for(int rows = 0; rows < L.length; rows++){
+            for(int rows = 0; rows < L.length; rows+=2){//OBSERVE QUE HÁ X PONTOS E X/2 LINHAS POR ISSO QUE EU COLOQUEI ROWS+=2
                 int xi = Pontos[L[rows][0]][0];
                 int yi = Pontos[L[rows][0]][1]; 
                 int xf = Pontos[L[rows][1]][0];
