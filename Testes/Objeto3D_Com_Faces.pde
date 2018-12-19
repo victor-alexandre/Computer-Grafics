@@ -53,8 +53,7 @@ public class Objeto3D_Com_Faces{
                       
         //calculaCentro();println(xcentro+" " + ycentro + " " +zcentro);
         this.transformacoes = new TransV2(VTx, VTy, VTz, VRx, VRy, VRz, VSx, VSy, VSz); 
-        projecao = 0;         
-        
+        projecao = 0;                
         
         //for(int i = 0; i < this.FaceList.size(); i++){
         //    println("\n\n Pontos da Face "+ i + ": ");

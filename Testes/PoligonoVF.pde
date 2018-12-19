@@ -51,7 +51,8 @@ public class PoligonoVF {
         //Se a funcao do processing for true então será usado uma função do processing para pintar o poligono se não será usado minha propria função
         if(preenche && !FuncaoDoProcessing)colorePoligono(cor_preenchimento);
         if(preenche && FuncaoDoProcessing)colore_com_FuncaoDoProcessing(P,face.F,cor_preenchimento);
-        //desenhaPoligono(P, face, cor_linha);
+        
+        desenhaPoligono(P, face, cor_preenchimento);
     } 
     
     void desenhaPoligono(int[][] P, Face face, color cor_linha){
@@ -70,6 +71,7 @@ public class PoligonoVF {
                 yf = P[face.F[rows+1]][1]; 
             }
             //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, cor_linha);
+            strokeWeight(10);
             stroke(cor_linha);
             line(xi, yi, xf, yf);
         }
