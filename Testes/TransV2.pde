@@ -227,7 +227,5 @@ public class TransV2 {
         
         this.Sz = this.Sy = this.Sx = 1;  
         MU = MT = matrizIdentidade();
-    }    
-    
-    
+    }            
 }

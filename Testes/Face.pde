@@ -10,8 +10,7 @@ public class Face{
         this.G = (int)G;
         this.B = (int)B;       
     }  
-    
-    
+       
     void calculaZmedio(int [][]P){
         int Zsum = 0;
         for(int i = 0; i < F.length; i++){

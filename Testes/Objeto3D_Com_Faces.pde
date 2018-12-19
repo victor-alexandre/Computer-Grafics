@@ -9,11 +9,7 @@ public class Objeto3D_Com_Faces{
     String nomeObjeto;
     
     int projecao; 
-    
-    //int xcentro = 0;
-    //int ycentro = 0;
-    //int zcentro = 0;
-    
+      
     int VTx, VTy, VTz;//VALORES PARA A TRANSLAÇÃO
     float VRx , VRy , VRz;//VALORES PARA A ROTAÇÃO
     float VSx, VSy, VSz;//VALORES PARA A ESCALA
@@ -63,29 +59,29 @@ public class Objeto3D_Com_Faces{
         //}
     }
     
-    void desenhaObjeto3D(boolean isSelected){         
-        int [][] Pontos = transformacoes.aplicarTransformacao(this.P);
-        if(isSelected){
-            for(int rows = 0; rows < L.length; rows++){
-                int xi = Pontos[L[rows][0]][0];
-                int yi = Pontos[L[rows][0]][1]; 
-                int xf = Pontos[L[rows][1]][0];
-                int yf = Pontos[L[rows][1]][1];
+    //void desenhaObjeto3D(boolean isSelected){         
+    //    int [][] Pontos = transformacoes.aplicarTransformacao(this.P);
+    //    if(isSelected){
+    //        for(int rows = 0; rows < L.length; rows++){
+    //            int xi = Pontos[L[rows][0]][0];
+    //            int yi = Pontos[L[rows][0]][1]; 
+    //            int xf = Pontos[L[rows][1]][0];
+    //            int yf = Pontos[L[rows][1]][1];
                 
-                LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(0,255,0));  
-            }
-        }
-        else{
-            for(int rows = 0; rows < L.length; rows++){
-                int xi = Pontos[L[rows][0]][0];
-                int yi = Pontos[L[rows][0]][1]; 
-                int xf = Pontos[L[rows][1]][0];
-                int yf = Pontos[L[rows][1]][1];
+    //            LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(0,255,0));  
+    //        }
+    //    }
+    //    else{
+    //        for(int rows = 0; rows < L.length; rows++){
+    //            int xi = Pontos[L[rows][0]][0];
+    //            int yi = Pontos[L[rows][0]][1]; 
+    //            int xf = Pontos[L[rows][1]][0];
+    //            int yf = Pontos[L[rows][1]][1];
                 
-                LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(255,0,0));  
-            }
-        }
-    } 
+    //            LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(255,0,0));  
+    //        }
+    //    }
+    //} 
     
     void desenhaObjeto3Dcolorido(boolean isSelected){
         int [][] Pontos = transformacoes.aplicarTransformacao(this.P);

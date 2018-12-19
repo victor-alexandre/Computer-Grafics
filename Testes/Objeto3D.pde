@@ -119,7 +119,7 @@ public class Objeto3D{
                     if(rows % 10 <= 8)stroke(folhaR,folhaG,folhaB);            
                     else if(rows % 10 == 9)stroke(flor1R, flor1G, flor1B);//flor   
                     else stroke(flor2R, flor2G, flor2B);//flor  
-                    espessura = 5;
+                    espessura = 3;
                     strokeWeight(espessura); 
                     line(xi, yi, xf, yf);
                 }
