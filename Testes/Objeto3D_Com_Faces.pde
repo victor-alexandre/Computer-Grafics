@@ -17,6 +17,7 @@ public class Objeto3D_Com_Faces{
     int VTx, VTy, VTz;//VALORES PARA A TRANSLAÇÃO
     float VRx , VRy , VRz;//VALORES PARA A ROTAÇÃO
     float VSx, VSy, VSz;//VALORES PARA A ESCALA
+    float EscalaProporcionalAoUniverso;
     
     int X_universo, Y_universo;
     
@@ -46,8 +47,8 @@ public class Objeto3D_Com_Faces{
         
         this.nomeObjeto = nomeObjeto;
         
-        if(this.Y_universo/(height*1.0) <= this.X_universo/(width*1.0))this.VSx = this.VSy = this.VSz = this.Y_universo/(height*1.0);
-        else this.VSx = this.VSy = this.VSz = this.X_universo/(width*1.0);
+        if(this.Y_universo/(height*1.0) <= this.X_universo/(width*1.0))this.EscalaProporcionalAoUniverso = this.VSx = this.VSy = this.VSz = this.Y_universo/(height*1.0);
+        else this.EscalaProporcionalAoUniverso = this.VSx = this.VSy = this.VSz = this.X_universo/(width*1.0);
         println("\n\n\n\n\n\n VSX: " + this.VSx + " VSY "+ this.VSy);
                       
         //calculaCentro();println(xcentro+" " + ycentro + " " +zcentro);
@@ -196,17 +197,22 @@ public class Objeto3D_Com_Faces{
         this.transformacoes.escalar();       
     }
     
-    //void calculaCentro(){
-    //        for(int i = 0; i < P.length; i++){
-    //        xcentro += P[i][0];
-    //        ycentro += P[i][1];
-    //        zcentro += P[i][2];
-    //    }
+    void objectReset(){
+        this.VTx = 0;
+        this.VTy = 0;
+        this.VTz = 0;
         
-    //    xcentro = xcentro/P.length;
-    //    ycentro = ycentro/P.length;
-    //    zcentro = zcentro/P.length;     
-    //}   
+        this.VRx = 0;
+        this.VRy = 0;
+        this.VRz = 0;
+        
+        
+        this.transformacoes.TransV2Reset();
+        this.VSz = this.VSy = this.VSx = this.EscalaProporcionalAoUniverso;        
+        this.transformacoes.update(this.VTx,this.VTy,this.VTz,this.VRx,this.VRy,this.VRz,this.VSx,this.VSy,this.VSz,this.projecao);
+        objectApplyTransformations();
+        
+    }   
 }
 
 class ZmedioDescendingComparator implements Comparator<Face> {    

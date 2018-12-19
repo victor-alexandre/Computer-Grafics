@@ -67,10 +67,11 @@ void setup(){
     imgBackground = loadImage("ceu.jpeg");
     imgMENU = loadImage ("menu.png");
     projection_font = createFont("Meera", 12,true);
-    int NumeroDeArquivos = new File("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/grass").list().length;
-   
+    
+    int NumeroDeArquivos1 = new File("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/grass").list().length;
+
     //LEIO todos os modelos da pasta.
-    for(int k = 0; k < NumeroDeArquivos; k++){
+    for(int k = 0; k < NumeroDeArquivos1; k++){
         String pad = "";
         if(k<10) pad = "00";
         if(k>=10) pad = "0";
@@ -81,28 +82,92 @@ void setup(){
         int [][]pontos = new int[NumeroDePontos][3];
         int [][]linhas = new int [NumeroDePontos][2];
         
-
-        int translacaoX = (int)random(-3*width/8, 3*width/8);
-        int translacaoZ = (int)random(-2*width/8, 2*width/8);
+        int  translacaoX = (int)random(-3*width/8, 3*width/8);
+        int  translacaoZ = (int)random(-2*width/8, 2*width/8);
+            
        // println("random x: " + translacaoX + "     random z: " + translacaoZ);
         for(int i = 0; i < NumeroDePontos; i+=2){
             String []parts = lines[i].split(" ");
             int xi = round(Float.parseFloat(parts[0]));
             int yi = round(Float.parseFloat(parts[1]));
             int zi = round(Float.parseFloat(parts[2]));
+
             
             parts = lines[i+1].split(" ");
             int xf = round(Float.parseFloat(parts[0]));
             int yf = round(Float.parseFloat(parts[1]));
             int zf = round(Float.parseFloat(parts[2]));
+      
             
             pontos[i][0] = xi + translacaoX;
             pontos[i][1] = yi;
             pontos[i][2] = zi + translacaoZ;
+
            
             pontos[i+1][0] = xf + translacaoX;
             pontos[i+1][1] = yf;
             pontos[i+1][2] = zf + translacaoZ;  
+
+            
+            linhas[i][0]=i;
+            linhas[i][1]= i+1;                 
+        }
+        ObjectList.add(new Objeto3D(pontos, linhas, Figure_X_universo, Figure_Y_universo, Figure_X_universo));
+    }
+    
+    
+    int NumeroDeArquivos = new File("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/tree").list().length;
+    int [][]random_points = new int[NumeroDeArquivos][2];
+    //LEIO todos os modelos da pasta.
+    for(int k = 0; k < NumeroDeArquivos; k++){
+        String pad = "";
+        if(k<10) pad = "00";
+        if(k>=10) pad = "0";
+        if(k>=100) pad = "";
+        String[] lines = loadStrings("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/tree/"+ "tree"+pad+k+".txt");
+        int NumeroDePontos = lines.length;
+        int Figure_X_universo = width, Figure_Y_universo = height;
+        int [][]pontos = new int[NumeroDePontos][5];
+        int [][]linhas = new int [NumeroDePontos][2];
+        
+
+        int  translacaoX = (int)random(-3*width/8, 3*width/8);
+        int  translacaoZ = (int)random(-2*width/8, 2*width/8);
+        while(verifica_sorteio(random_points,translacaoX,translacaoZ)){
+            translacaoX = (int)random(-3*width/8, 3*width/8);
+            translacaoZ = (int)random(-2*width/8, 2*width/8);
+        }
+            
+       // println("random x: " + translacaoX + "     random z: " + translacaoZ);
+        for(int i = 0; i < NumeroDePontos; i+=2){
+            String []parts = lines[i].split(" ");
+            int xi = round(Float.parseFloat(parts[0]));
+            int yi = round(Float.parseFloat(parts[1]));
+            int zi = round(Float.parseFloat(parts[2])*1000);
+            int nivel = round(Float.parseFloat(parts[3]));
+            int stroke_weight = round(Float.parseFloat(parts[4]));            
+            
+            parts = lines[i+1].split(" ");
+            int xf = round(Float.parseFloat(parts[0]));
+            int yf = round(Float.parseFloat(parts[1]));
+            int zf = round(Float.parseFloat(parts[2])*1000);
+            //if(i == 50 || i == 60 || i == 70 || i == 80 || i == 10)
+            //println(zf);
+            
+            int nivel1 = round(Float.parseFloat(parts[3]));
+            int stroke_weight1 = round(Float.parseFloat(parts[4]));    
+            
+            pontos[i][0] = xi + translacaoX;
+            pontos[i][1] = yi;
+            pontos[i][2] = zi + translacaoZ;
+            pontos[i][3] = nivel;
+            pontos[i][4] = stroke_weight;
+            
+            pontos[i+1][0] = xf + translacaoX;
+            pontos[i+1][1] = yf;
+            pontos[i+1][2] = zf + translacaoZ;
+            pontos[i+1][3] = nivel1;
+            pontos[i+1][4] = stroke_weight1;
             
             linhas[i][0]=i;
             linhas[i][1]= i+1;                 
@@ -121,7 +186,7 @@ void draw(){
         
 
         background(0);
-        image(imgBackground,0,0);
+        image(imgBackground,0,0,width,height);
         textFont(projection_font,25);
         String projection_name = "Projeção: ";
         if(projecao % 5 == 0)projection_name = projection_name + "Cavaleira";
@@ -160,10 +225,14 @@ void draw(){
             }
             
             //Aqui eu desenho as arvores por ultimo
-            for(int i = 0; i < 2000; i++){
+            for(int i = 0; i < 60; i++){
+                ObjectList.get(i).desenhaObjeto3D(false); 
+            } 
+
+              for(int i = 100; i < 160; i++){
                 ObjectList.get(i).desenhaObjeto3D(true); 
             } 
-            
+          
 
             
         }
@@ -306,11 +375,20 @@ void reset(){
 }
 
 void ResetAll(){
+    reset();
+    projecao = 0;
     if(!ObjectList.isEmpty()){
-        for(int i = 0; i < ObjectList.size(); i++)ObjectList.get(i).objectSet(0,0,0,0,0,0,1,1,1);
+        for(int i = 0; i < ObjectList.size(); i++)ObjectList.get(i).objectReset();
     }
    if(!ObjectList_Com_Faces.isEmpty()){
-        for(int i = 0; i < ObjectList_Com_Faces.size(); i++)ObjectList_Com_Faces.get(i).objectSet(0,0,0,0,0,0,1,1,1);
+        for(int i = 0; i < ObjectList_Com_Faces.size(); i++)ObjectList_Com_Faces.get(i).objectReset();
+    }    
+}
+
+boolean verifica_sorteio(int [][]random_points, int new_x, int new_z){
+    for(int i = 0; i < random_points.length; i++){
+        if(random_points[i][0]== new_x && random_points[i][1] == new_z)return true;
     }
-    reset();
+    return false;
+
 }

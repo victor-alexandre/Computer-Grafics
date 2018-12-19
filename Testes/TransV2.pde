@@ -133,15 +133,15 @@ public class TransV2 {
             else if(projecao == 3){
             //aplico projeçao Ponto de fuga em Z + reflexão no eixo y por causa das coordenadas do processing + translado a origem para o centro da tela
             //estou considerando o ponto de fuga de z como sendo -100
-            resultado[i][0] = round(x/(1-(z/-4000))) + round(width/2);            
-            resultado[i][1] = -1*round(y/(1-(z/-4000))) + round(height/2);     
+            resultado[i][0] = round(x/(1-(z/-8000))) + round(width/2);            
+            resultado[i][1] = -1*round(y/(1-(z/-8000))) + round(height/2);     
             }  
             
             else if(projecao == 4){
             //aplico projeçao Ponto de fuga em X e Z  + reflexão no eixo y por causa das coordenadas do processing + translado a origem para o centro da tela
             //estou considerando o ponto de fuga de z como sendo -100 e o de x 180
-            resultado[i][0] = round(x/(1-(x/2000)-(z/-4000))) + round(width/2);            
-            resultado[i][1] = -1*round(y/(1-(x/2000)-(z/-4000))) + round(height/2);     
+            resultado[i][0] = round(x/(1-(x/2000)-(z/-8000))) + round(width/2);            
+            resultado[i][1] = -1*round(y/(1-(x/2000)-(z/-8000))) + round(height/2);     
             }
             
             //era pra mim converter 3D para 2D, (ou seja elimina eixo z  essa é a projeção ortográfica), mas estou guardando esse Z para calcular o zmedio 
@@ -210,5 +210,24 @@ public class TransV2 {
         this.Sx = Sx;
         this.Sy = Sy;
         this.Sz = Sz;               
-    }        
+    } 
+    
+    void TransV2Reset(){
+        this.URx = 0;
+        this.URy = 0;
+        this.URz = 0;        
+        
+        this.Tx = 0;
+        this.Ty = 0;
+        this.Tz = 0;
+        
+        this.Rx = 0;
+        this.Ry = 0;
+        this.Rz = 0;
+        
+        this.Sz = this.Sy = this.Sx = 1;  
+        MU = MT = matrizIdentidade();
+    }    
+    
+    
 }

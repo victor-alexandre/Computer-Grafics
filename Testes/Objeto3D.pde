@@ -18,6 +18,7 @@ public class Objeto3D{
     float VRx , VRy , VRz;//VALORES PARA A ROTAÇÃO
     float VSx, VSy, VSz;//VALORES PARA A ESCALA
     
+    float EscalaProporcionalAoUniverso;
     int X_universo, Y_universo, Z_universo;
 
     TransV2 transformacoes;
@@ -35,8 +36,8 @@ public class Objeto3D{
         this.Y_universo = Y_universo;
         this.Z_universo = Z_universo;
         
-        if(this.Y_universo/(height*1.0) <= this.X_universo/(width*1.0))this.VSx = this.VSy = this.VSz = this.Y_universo/(height*1.0);
-        else this.VSx = this.VSy = this.VSz = this.X_universo/(width*1.0);
+        if(this.Y_universo/(height*1.0) <= this.X_universo/(width*1.0))this.EscalaProporcionalAoUniverso = this.VSx = this.VSy = this.VSz = this.Y_universo/(height*1.0);
+        else this.EscalaProporcionalAoUniverso = this.VSx = this.VSy = this.VSz = this.X_universo/(width*1.0);
                       
         //calculaCentro();println(xcentro+" " + ycentro + " " +zcentro);
         this.transformacoes = new TransV2(VTx, VTy, VTz, VRx, VRy, VRz, VSx, VSy, VSz); 
@@ -54,7 +55,7 @@ public class Objeto3D{
                 int yf = Pontos[L[rows][1]][1];
                 
                 //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(0,255,0));
-
+               // strokeWeight(Pontos[L[rows][0]][4]*1/10);
                 stroke(R,G,B);
                 line(xi, yi, xf, yf);
             }
@@ -67,7 +68,7 @@ public class Objeto3D{
                 int yf = Pontos[L[rows][1]][1];
                 
                 //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(255,0,0)); 
-                stroke(255,0,0);
+                stroke(R,G,B);
                 line(xi, yi, xf, yf);
             }
         }
@@ -115,15 +116,20 @@ public class Objeto3D{
         this.transformacoes.escalar();       
     }
     
-    //void calculaCentro(){
-    //        for(int i = 0; i < P.length; i++){
-    //        xcentro += P[i][0];
-    //        ycentro += P[i][1];
-    //        zcentro += P[i][2];
-    //    }
+    void objectReset(){
+        this.VTx = 0;
+        this.VTy = 0;
+        this.VTz = 0;
         
-    //    xcentro = xcentro/P.length;
-    //    ycentro = ycentro/P.length;
-    //    zcentro = zcentro/P.length;     
-    //}   
+        this.VRx = 0;
+        this.VRy = 0;
+        this.VRz = 0;
+        
+        
+        this.transformacoes.TransV2Reset();
+        this.VSz = this.VSy = this.VSx = this.EscalaProporcionalAoUniverso;        
+        this.transformacoes.update(this.VTx,this.VTy,this.VTz,this.VRx,this.VRy,this.VRz,this.VSx,this.VSy,this.VSz,this.projecao);
+        objectApplyTransformations();
+        
+    } 
 }
