@@ -17,14 +17,13 @@ public class Objeto3D{
     int galhoG = (int)random(102,204);
     int galhoB = (int)random(0,51);
     
-    int folhaR = (int)random(0,102);
-    int folhaG = (int)random(153,255);
-    int folhaB = (int)random(0,100);
+    int folhaR = (int)random(0,178);
+    int folhaG = (int)random(51,255);
+    int folhaB = (int)random(0,178);
     
-    //int xcentro = 0;
-    //int ycentro = 0;
-    //int zcentro = 0;
-    
+    int flor1R, flor1G, flor1B; 
+    int flor2R, flor2G, flor2B; 
+       
     int VTx, VTy, VTz;//VALORES PARA A TRANSLAÇÃO
     float VRx , VRy , VRz;//VALORES PARA A ROTAÇÃO
     float VSx, VSy, VSz;//VALORES PARA A ESCALA
@@ -54,6 +53,47 @@ public class Objeto3D{
         //calculaCentro();println(xcentro+" " + ycentro + " " +zcentro);
         this.transformacoes = new TransV2(VTx, VTy, VTz, VRx, VRy, VRz, VSx, VSy, VSz); 
         projecao = 0;
+        
+        
+        //lanço moeda para escolher os tipos de flores
+        int moeda = round(random(0,3));        
+        //Combinações TIPO1-TIPO3 // TIPO1-TIPO4// TIPO2-TIPO4// TIPO2-TIPO3
+        if(moeda == 0){
+            flor1R = (int)random(102,255);  flor1G = (int)random(0,204);  flor1B = (int)random(0,153); 
+            flor2R = (int)random(0,153);  flor2G = (int)random(0,255);  flor2B = (int)random(102,255);     
+        }    
+        else if(moeda == 1){
+            flor1R = (int)random(102,255);flor1G = (int)random(0,204); flor1B = (int)random(0,153);
+            flor2R = (int)random(51,255);  flor2G = (int)random(0,153);  flor2B = (int)random(51,255);    
+        }
+        else if(moeda == 2){
+            flor1R = (int)random(102,255);flor1G = (int)random(102,255); flor1B = (int)random(0,153);
+            flor2R = (int)random(51,255);  flor2G = (int)random(0,153);  flor2B = (int)random(51,255);     
+        } 
+        else{
+            flor1R = (int)random(102,255);flor1G = (int)random(102,255); flor1B = (int)random(0,153);
+            flor2R = (int)random(0,153);  flor2G = (int)random(0,255);  flor2B = (int)random(102,255);
+        }    
+          //RANGE DOS TIPOS DE FLORES:
+          //TIPO 1 
+          //R 102-255
+          //G 0 -204
+          //B 0-153
+          
+          //TIPO 2 
+          //R 102-255
+          //G 102 -255
+          //B 0-153
+        
+          //TIPO 3 
+          //R 0-153
+          //G 0 -255
+          //B 102-255
+        
+          //TIPO 4 
+          //R 51-255
+          //G 0 -153
+          //B 51-255                                     
     }
     
     void ObjectSetInfo(int [][]info, int maxProfundidade, int maxAltura){
@@ -76,8 +116,9 @@ public class Objeto3D{
                 float espessura;
                 
                 if(this.info[L[rows][0]][0] == 0){
-                    if(rows % 10 <= 7)stroke(folhaR,folhaG,folhaB);            
-                    else stroke(255,255,0);//flor                   
+                    if(rows % 10 <= 8)stroke(folhaR,folhaG,folhaB);            
+                    else if(rows % 10 == 9)stroke(flor1R, flor1G, flor1B);//flor   
+                    else stroke(flor2R, flor2G, flor2B);//flor  
                     espessura = 5;
                     strokeWeight(espessura); 
                     line(xi, yi, xf, yf);
@@ -90,7 +131,7 @@ public class Objeto3D{
                     //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, color(0,255,0));
                     strokeWeight(espessura);
 
-                    if(this.info[L[rows][0]][0] <= 7)stroke(galhoR,galhoG,galhoB);
+                    if(this.info[L[rows][0]][0] <= 5)stroke(galhoR,galhoG,galhoB);
                     else stroke(troncoR,troncoG,troncoB);
                     line(xi, yi, xf, yf);
                 }

@@ -94,7 +94,7 @@ void setup(){
     random_Files.shuffle();
     
     
-    println("xmax: " + 3*width/8 + "   xmin : "  + -3*width/8 + "     zmax: " + 2*width/8 + "   zmin : "  + -2*width/8 ); 
+   // println("xmax: " + 3*width/8 + "   xmin : "  + -3*width/8 + "     zmax: " + 2*width/8 + "   zmin : "  + -2*width/8 ); 
 
     //int NumeroDeArquivos1 = new File("/home/accelerator/Documents/4 semestre/computaçãografica/lsystem_trees/trees/models/grass").list().length;
 
