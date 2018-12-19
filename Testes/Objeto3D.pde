@@ -116,8 +116,8 @@ public class Objeto3D{
                 float espessura;
                 
                 if(this.info[L[rows][0]][0] == 0){
-                    if(rows % 10 <= 8)stroke(folhaR,folhaG,folhaB);            
-                    else if(rows % 10 == 9)stroke(flor1R, flor1G, flor1B);//flor   
+                    if(rows % 10 <= 7)stroke(folhaR,folhaG,folhaB);            
+                    else if(rows % 10 == 8)stroke(flor1R, flor1G, flor1B);//flor   
                     else stroke(flor2R, flor2G, flor2B);//flor  
                     espessura = 3;
                     strokeWeight(espessura); 

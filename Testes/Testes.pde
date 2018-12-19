@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.*;
 import java.awt.event.KeyEvent;
 
-String PATH = "/home/accelerator/Documents/4 semestre/computaçãografica/trees/models";
+String PATH = "/home/accelerator/Documents/4 semestre/computaçãografica/trees/models/tree3d";
 int NumeroDeArquivos = new File(PATH).list().length;
-int MaxTrees = 5;
+int MaxTrees = 100;
 
 boolean Universe = true;
 PImage imgMENU;
@@ -62,10 +62,10 @@ void setup(){
     //Z RANGE = 680
     //X RANGE = 1020
     IntList random_X = new IntList();
-    for(int i = -3*width/8 ; i < 3*width/8; i+=10)random_X.append(i);
+    for(int i = -3*width/8 ; i < 3*width/8; i+=15)random_X.append(i);
     
     IntList random_Z= new IntList();
-    for(int i = -2*width/8 ; i < 2*width/8; i+=10)random_Z.append(i);
+    for(int i = -2*width/8 ; i < 2*width/8; i+=15)random_Z.append(i);
     
     IntList random_Files= new IntList();
     for(int i = 0; i < NumeroDeArquivos; i++)random_Files.append(i);
@@ -92,8 +92,8 @@ void setup(){
         int maxAltura = 0;
         
 
-        int  translacaoX = random_X.get(k);
-        int  translacaoZ = random_Z.get(k);
+        int  translacaoX = random_X.get((k+20)%random_X.size());
+        int  translacaoZ = random_Z.get(k%random_Z.size());
 
             
        // println("random x: " + translacaoX + "     random z: " + translacaoZ);
