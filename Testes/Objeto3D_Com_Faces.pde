@@ -49,19 +49,19 @@ public class Objeto3D_Com_Faces{
         
         if(this.Y_universo/(height*1.0) <= this.X_universo/(width*1.0))this.EscalaProporcionalAoUniverso = this.VSx = this.VSy = this.VSz = this.Y_universo/(height*1.0);
         else this.EscalaProporcionalAoUniverso = this.VSx = this.VSy = this.VSz = this.X_universo/(width*1.0);
-        println("\n\n\n\n\n\n VSX: " + this.VSx + " VSY "+ this.VSy);
+        //println("\n\n\n\n\n\n VSX: " + this.VSx + " VSY "+ this.VSy);
                       
         //calculaCentro();println(xcentro+" " + ycentro + " " +zcentro);
         this.transformacoes = new TransV2(VTx, VTy, VTz, VRx, VRy, VRz, VSx, VSy, VSz); 
         projecao = 0;         
         
         
-        for(int i = 0; i < this.FaceList.size(); i++){
-            println("\n\n Pontos da Face "+ i + ": ");
-            for(int j = 0; j < FaceList.get(i).F.length; j++){
-                println( FaceList.get(i).F[j] + " ");
-            }
-        }
+        //for(int i = 0; i < this.FaceList.size(); i++){
+        //    println("\n\n Pontos da Face "+ i + ": ");
+        //    for(int j = 0; j < FaceList.get(i).F.length; j++){
+        //        println( FaceList.get(i).F[j] + " ");
+        //    }
+        //}
     }
     
     void desenhaObjeto3D(boolean isSelected){         

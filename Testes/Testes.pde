@@ -3,6 +3,8 @@ import java.util.*;
 import java.awt.event.KeyEvent;
 
 String PATH = "/home/accelerator/Documents/4 semestre/computaçãografica/trees/models";
+int NumeroDeArquivos = new File(PATH).list().length;
+int MaxTrees = 10;
 
 boolean Universe = true;
 PImage imgMENU;
@@ -33,7 +35,7 @@ String nomeFigura;
 int qtdObjetos_na_figura;
 
 
-int NumeroDeArquivos = new File(PATH).list().length;
+
 
 
 void setup(){
@@ -75,12 +77,22 @@ void setup(){
     projection_font = createFont("Meera", 12,true);
 
       
-
-    IntList random_X;
-    IntList random_Z;
-    IntList random_Files;
     //Z RANGE = 680
     //X RANGE = 1020
+    IntList random_X = new IntList();
+    for(int i = -3*width/8 ; i < 3*width/8; i+=10)random_X.append(i);
+    
+    IntList random_Z= new IntList();
+    for(int i = -2*width/8 ; i < 2*width/8; i+=10)random_Z.append(i);
+    
+    IntList random_Files= new IntList();
+    for(int i = 0; i < NumeroDeArquivos; i++)random_Files.append(i);
+    
+
+    random_X.shuffle();
+    random_Z.shuffle();
+    random_Files.shuffle();
+    
     
     println("xmax: " + 3*width/8 + "   xmin : "  + -3*width/8 + "     zmax: " + 2*width/8 + "   zmin : "  + -2*width/8 ); 
 
@@ -160,10 +172,11 @@ void setup(){
     //LEIO todos os modelos da pasta.
     for(int k = 0; k < NumeroDeArquivos; k++){      
         String pad = "";
-        if(k<10) pad = "00";
-        if(k>=10) pad = "0";
-        if(k>=100) pad = "";
-        String[] lines = loadStrings(PATH+ "/"+"tree"+pad+k+".txt");
+        int numeroDoArquivo = random_Files.get(k);
+        if(numeroDoArquivo<10) pad = "00";
+        if(numeroDoArquivo>=10) pad = "0";
+        if(numeroDoArquivo>=100) pad = "";
+        String[] lines = loadStrings(PATH+ "/"+"tree"+pad+numeroDoArquivo+".txt");
         int NumeroDePontos = lines.length;
         int Figure_X_universo = width, Figure_Y_universo = height;
         int [][]pontos = new int[NumeroDePontos][3];
@@ -173,12 +186,9 @@ void setup(){
         int maxAltura = 0;
         
 
-        int  translacaoX = (int)random(-3*width/8, 3*width/8);
-        int  translacaoZ = (int)random(-2*width/8, 2*width/8);
-        while(verifica_sorteio(random_points,translacaoX,translacaoZ)){
-            translacaoX = (int)random(-3*width/8, 3*width/8);
-            translacaoZ = (int)random(-2*width/8, 2*width/8);
-        }
+        int  translacaoX = random_X.get(k);
+        int  translacaoZ = random_Z.get(k);
+
             
        // println("random x: " + translacaoX + "     random z: " + translacaoZ);
         for(int i = 0; i < NumeroDePontos; i+=2){
@@ -275,7 +285,7 @@ void draw(){
             //    ObjectList.get(i).desenhaObjeto3D(true); 
             //} 
 
-              for(int i = 0; i < NumeroDeArquivos; i++){
+              for(int i = 0; i < MaxTrees; i++){
                 ObjectList.get(i).desenhaObjeto3D(true); 
             } 
           
