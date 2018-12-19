@@ -71,7 +71,7 @@ public class PoligonoVF {
                 yf = P[face.F[rows+1]][1]; 
             }
             //LinhaDDA temp = new LinhaDDA(xi, yi, xf, yf, cor_linha);
-            strokeWeight(10);
+            strokeWeight(16);
             stroke(cor_linha);
             line(xi, yi, xf, yf);
         }
