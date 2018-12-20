@@ -4,7 +4,8 @@ import java.awt.event.KeyEvent;
 
 String PATH = "/home/accelerator/Documents/4 semestre/computaçãografica/trees/models/tree3d";
 int NumeroDeArquivos = new File(PATH).list().length;
-int MaxTrees = 100;
+//int NumeroDeArquivos = 50;
+int MaxTrees = 50;
 
 boolean Universe = true;
 PImage imgMENU;
@@ -137,6 +138,11 @@ void setup(){
         //println(maxAltura);
         ObjectList.get(ObjectList.size()-1).ObjectSetInfo(info, maxProfundidade, maxAltura);
     }
+    
+    
+    long seed = System.nanoTime();
+    Collections.shuffle(ObjectList, new Random(seed));
+    Sort_First_N_Elements(ObjectList, MaxTrees);
 }
 
 void draw(){             
@@ -164,7 +170,7 @@ void draw(){
 
         if(!ObjectList_Com_Faces.isEmpty()){
             for(int i = 0; i < ObjectList_Com_Faces.size(); i++){
-                ObjectList_Com_Faces.get(i).objectUpdate(-6*Tx, -6*Ty, -6*Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);
+                ObjectList_Com_Faces.get(i).objectUpdate(-4*Tx, -4*Ty, -4*Tz, 0, 0, 0, 2*Sx, 2*Sy, 2*Sz, projecao);
                 ObjectList_Com_Faces.get(i).transformacoes.updateUniverse(Rx, Ry, Rz);
             }
         }
@@ -172,7 +178,7 @@ void draw(){
         if(!ObjectList.isEmpty()){
             for(int i = 0; i < ObjectList.size(); i++){
                 ObjectList.get(i).transformacoes.updateUniverse(Rx, Ry, Rz);
-                ObjectList.get(i).objectUpdate(-6*Tx, -6*Ty, -6*Tz, 0, 0, 0, 3*Sx, 3*Sy, 3*Sz, projecao);                                                
+                ObjectList.get(i).objectUpdate(-4*Tx, -4*Ty, -4*Tz, 0, 0, 0, 2*Sx, 2*Sy, 2*Sz, projecao);                                                
             }
         }
         reset();
@@ -182,9 +188,9 @@ void draw(){
         }
         
           for(int i = 0; i < MaxTrees; i++){
-            ObjectList.get(i).desenhaObjeto3D(true); 
+            ObjectList.get(i).desenhaObjeto3D(true);
         }                       
-    }     //<>// //<>// //<>//
+    }     //<>//
 }
 
 //implementação para fazer funcionar a entrada de mais de uma tecla no caso o shift+tab
@@ -237,12 +243,12 @@ void keyPressed(){
     }
 
     //KEYS PARA ROTACIONAR
-    if(key == 'i' || key == 'I')Ry = 0.025; 
-    if(key == 'k' || key == 'K')Ry = -0.025; 
-    if(key == 'l' || key == 'L')Rx = 0.025; 
-    if(key == 'j' || key == 'J')Rx = -0.025; 
-    if(key == '7')Rz = -0.025; 
-    if(key == '8')Rz = 0.025;    
+    if(key == 'i' || key == 'I')Ry = 0.02; 
+    if(key == 'k' || key == 'K')Ry = -0.02; 
+    if(key == 'l' || key == 'L')Rx = 0.02; 
+    if(key == 'j' || key == 'J')Rx = -0.02; 
+    if(key == '7')Rz = -0.02; 
+    if(key == '8')Rz = 0.02;    
    
     //Key para controlar qual projeção será aplicada
     if(key == 'p' || key == 'P'){projecao++; if(projecao % 5 == 3)  Tz += 220; if(projecao % 5 == 0)  Tz -= 220;}
@@ -250,6 +256,7 @@ void keyPressed(){
     if(key == 'n' || key == 'N'){
         long seed = System.nanoTime();
         Collections.shuffle(ObjectList, new Random(seed));
+        Sort_First_N_Elements(ObjectList, MaxTrees);
     }
 
 }
@@ -277,5 +284,15 @@ void ResetAll(){
     }
    if(!ObjectList_Com_Faces.isEmpty()){
         for(int i = 0; i < ObjectList_Com_Faces.size(); i++)ObjectList_Com_Faces.get(i).objectReset();
-    }    
+    }     
+}
+
+void Sort_First_N_Elements(ArrayList <Objeto3D> ObjectList, int n){
+    for(int i = 0; i < n; i++){
+        for(int j = i+1; j < n; j++){
+            if(ObjectList.get(i).P[0][2] >  ObjectList.get(j).P[0][2]){//essa comparação é com o valor de Z do chão, ou seja, eu não preciso usar Z médio aqui
+                Collections.swap(ObjectList, i, j);
+            } 
+        }
+    }
 }

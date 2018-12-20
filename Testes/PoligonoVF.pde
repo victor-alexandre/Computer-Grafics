@@ -122,9 +122,9 @@ public class PoligonoVF {
       fill(cor_preenche);
       beginShape();
       for (int i = 0; i < Indices.length; i++) {
-        vertex((Pontos[Indices[i]][0]), Pontos[Indices[i]][1]);
+        vertex(Pontos[Indices[i]][0], Pontos[Indices[i]][1]);
       }
-      endShape(CLOSE);
+      endShape();                      
     }
 
     float calc_Inverse_M(int xi, int yi, int xf, int yf){
