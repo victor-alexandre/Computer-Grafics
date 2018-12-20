@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.*;
 import java.awt.event.KeyEvent;
 
-String PATH = "/home/accelerator/Documents/4 semestre/computaçãografica/trees/models/tree3d";
+String PATH = "/home/accelerator/Documents/4 semestre/computaçãografica/trees/models/tree2d";
 int NumeroDeArquivos = new File(PATH).list().length;
-//int NumeroDeArquivos = 50;
+//int NumeroDeArquivos = 15;
 int MaxTrees = 50;
 
 boolean Universe = true;
@@ -148,7 +148,7 @@ void setup(){
 void draw(){             
     if(menu){
         background(255);
-        image(imgMENU,width/4,0);      
+        image(imgMENU,width/6,height/10);      
     } //<>//
     
     else{        
@@ -160,13 +160,7 @@ void draw(){
         else if(projecao % 5 == 1)projection_name = projection_name + "Cabinet";
         else if(projecao % 5 == 2)projection_name = projection_name + "Isométrica";
         else if(projecao % 5 == 3)projection_name = projection_name + "Ponto de fuga em Z";
-        else if(projecao % 5 == 4)projection_name = projection_name + "Ponto de fuga em X e Z";
-
-        fill(255);
-        text(projection_name, 3.9*width/6, 25);
-                
-        fill(255);
-        text("Universo", 50,25);   
+        else if(projecao % 5 == 4)projection_name = projection_name + "Ponto de fuga em X e Z";             
 
         if(!ObjectList_Com_Faces.isEmpty()){
             for(int i = 0; i < ObjectList_Com_Faces.size(); i++){
@@ -189,8 +183,12 @@ void draw(){
         
           for(int i = 0; i < MaxTrees; i++){
             ObjectList.get(i).desenhaObjeto3D(true);
-        }                       
-    }     //<>//
+        } 
+        
+        
+        fill(255);
+        text(projection_name, 4*width/5, 27);   
+    } //<>//
 }
 
 //implementação para fazer funcionar a entrada de mais de uma tecla no caso o shift+tab

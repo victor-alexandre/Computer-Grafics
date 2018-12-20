@@ -52,7 +52,7 @@ public class PoligonoVF {
         if(preenche && !FuncaoDoProcessing)colorePoligono(cor_preenchimento);
         if(preenche && FuncaoDoProcessing)colore_com_FuncaoDoProcessing(P,face.F,cor_preenchimento);
         
-        desenhaPoligono(P, face, cor_preenchimento);
+        //desenhaPoligono(P, face, cor_preenchimento);
     } 
     
     void desenhaPoligono(int[][] P, Face face, color cor_linha){
@@ -118,13 +118,14 @@ public class PoligonoVF {
         }
     }
     
-    void colore_com_FuncaoDoProcessing (int[][] Pontos, int[] Indices, color cor_preenche) {
+    void colore_com_FuncaoDoProcessing (int[][] Pontos, int[] Linhas, color cor_preenche) {
+      noStroke();
       fill(cor_preenche);
       beginShape();
-      for (int i = 0; i < Indices.length; i++) {
-        vertex(Pontos[Indices[i]][0], Pontos[Indices[i]][1]);
+      for (int i = 0; i < Linhas.length; i++) {
+        vertex(Pontos[Linhas[i]][0], Pontos[Linhas[i]][1]);
       }
-      endShape();                      
+      endShape(CLOSE);                      
     }
 
     float calc_Inverse_M(int xi, int yi, int xf, int yf){
